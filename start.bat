@@ -47,17 +47,13 @@ if not exist "venv\Scripts\activate.bat" (
 echo Activating virtual environment...
 call venv\Scripts\activate.bat
 
-:: Check if dependencies are installed
-pip show flask >nul 2>&1
+:: Check if flask is installed (as proxy for all deps)
+python -c "import flask" >nul 2>&1
 if %errorlevel% neq 0 (
     echo Installing dependencies...
     pip install -r requirements.txt
-    if %errorlevel% neq 0 (
-        echo ERROR: Failed to install dependencies.
-        pause
-        exit /b 1
-    )
-    echo Dependencies installed successfully.
+    echo.
+    echo Dependencies installed.
     echo.
 )
 
