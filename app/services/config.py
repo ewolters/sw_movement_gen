@@ -20,6 +20,7 @@ SQL_QUERY_TYPES = [
     'open_jobs',         # Open production jobs lookup
     'item_mapping',      # Part number to Item code mapping
     'movements',         # Active movements/allocations lookup
+    'sw_fg',             # Sherwin Williams FG inventory lookup
 ]
 
 
@@ -31,6 +32,7 @@ class SQLQueries:
     open_jobs: Optional[str] = None          # Query to get open jobs by part/site
     item_mapping: Optional[str] = None       # Query to map part number to item code
     movements: Optional[str] = None          # Query to get active movements for a job
+    sw_fg: Optional[str] = None              # Query to get Sherwin Williams FG inventory
 
     def to_dict(self) -> dict:
         return asdict(self)
@@ -42,7 +44,8 @@ class SQLQueries:
             wip_inventory=data.get('wip_inventory'),
             open_jobs=data.get('open_jobs'),
             item_mapping=data.get('item_mapping'),
-            movements=data.get('movements')
+            movements=data.get('movements'),
+            sw_fg=data.get('sw_fg')
         )
 
     def get_query(self, query_type: str) -> Optional[str]:
@@ -68,6 +71,7 @@ class AppConfig:
     last_forecast_file: Optional[str] = None  # Last loaded forecast filename
     last_forecast_modified: Optional[str] = None  # Last modified timestamp of forecast file
     sql_queries: SQLQueries = field(default_factory=SQLQueries)  # SQL query templates
+    db_credentials: Optional[Dict] = None  # Database connection credentials
 
     def to_dict(self) -> dict:
         d = asdict(self)
@@ -86,7 +90,8 @@ class AppConfig:
             scheduler_minute=data.get('scheduler_minute', 0),
             last_forecast_file=data.get('last_forecast_file'),
             last_forecast_modified=data.get('last_forecast_modified'),
-            sql_queries=SQLQueries.from_dict(sql_data) if sql_data else SQLQueries()
+            sql_queries=SQLQueries.from_dict(sql_data) if sql_data else SQLQueries(),
+            db_credentials=data.get('db_credentials')
         )
 
 
@@ -273,6 +278,61 @@ class ConfigService:
     def get_configured_sql_count(self) -> int:
         """Get count of configured SQL queries"""
         return sum(1 for qt in SQL_QUERY_TYPES if self.is_sql_configured(qt))
+
+    # Database Credentials Management
+    def get_db_credentials(self) -> Optional[Dict]:
+        """Get database credentials"""
+        return self._config.db_credentials
+
+    def set_db_credentials(self, credentials: Dict) -> bool:
+        """
+        Set database credentials.
+
+        Args:
+            credentials: Dict with connection info:
+                - connection_string: Full ODBC connection string, OR
+                - driver: ODBC driver name
+                - server: Database server address
+                - database: Database name
+                - username: Database username (optional for Windows auth)
+                - password: Database password (optional for Windows auth)
+                - trusted_connection: Use Windows authentication (bool)
+
+        Returns:
+            True if credentials were saved
+        """
+        # Build connection string if individual fields provided
+        if credentials.get('driver') and not credentials.get('connection_string'):
+            parts = [f"DRIVER={{{credentials['driver']}}}"]
+
+            if credentials.get('server'):
+                parts.append(f"SERVER={credentials['server']}")
+            if credentials.get('database'):
+                parts.append(f"DATABASE={credentials['database']}")
+
+            if credentials.get('trusted_connection'):
+                parts.append("Trusted_Connection=yes")
+            else:
+                if credentials.get('username'):
+                    parts.append(f"UID={credentials['username']}")
+                if credentials.get('password'):
+                    parts.append(f"PWD={credentials['password']}")
+
+            credentials['connection_string'] = ';'.join(parts)
+
+        self._config.db_credentials = credentials
+        self._save_config()
+        return True
+
+    def clear_db_credentials(self):
+        """Clear database credentials"""
+        self._config.db_credentials = None
+        self._save_config()
+
+    def is_db_configured(self) -> bool:
+        """Check if database credentials are configured"""
+        creds = self._config.db_credentials
+        return creds is not None and bool(creds.get('connection_string'))
 
 
 def get_config() -> ConfigService:

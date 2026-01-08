@@ -106,11 +106,15 @@ def sql_executor():
     """SQL Query Configuration"""
     config_service = get_config()
     sql_service = get_sql_service()
+    db_creds = config_service.get_db_credentials() or {}
 
     return render_template('sql.html',
                          sql_queries=config_service.config.sql_queries,
                          configured_count=config_service.get_configured_sql_count(),
-                         connected=sql_service.is_connected())
+                         connected=sql_service.is_connected(),
+                         db_configured=config_service.is_db_configured(),
+                         db_credentials=db_creds,
+                         connection_status=sql_service.get_connection_status())
 
 
 @app.route('/logs')
@@ -730,6 +734,86 @@ def test_sql_query():
     except Exception as e:
         logger.log_error("SQL Test", str(e))
         return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/sql/credentials', methods=['GET'])
+def get_db_credentials():
+    """Get database credentials (without password)"""
+    config_service = get_config()
+    creds = config_service.get_db_credentials() or {}
+
+    # Return credentials without password for security
+    safe_creds = {
+        'driver': creds.get('driver', ''),
+        'server': creds.get('server', ''),
+        'database': creds.get('database', ''),
+        'username': creds.get('username', ''),
+        'trusted_connection': creds.get('trusted_connection', False),
+        'has_password': bool(creds.get('password')),
+        'has_connection_string': bool(creds.get('connection_string'))
+    }
+    return jsonify(safe_creds)
+
+
+@app.route('/api/sql/credentials', methods=['POST'])
+def save_db_credentials():
+    """Save database credentials"""
+    data = request.get_json()
+    config_service = get_config()
+    logger = get_logger()
+
+    try:
+        config_service.set_db_credentials(data)
+        logger.log_user_action("Database credentials updated", f"Server: {data.get('server', 'N/A')}")
+        return jsonify({"success": True})
+    except Exception as e:
+        logger.log_error("DB Credentials", str(e))
+        return jsonify({"success": False, "error": str(e)}), 500
+
+
+@app.route('/api/sql/credentials', methods=['DELETE'])
+def clear_db_credentials():
+    """Clear database credentials"""
+    config_service = get_config()
+    sql_service = get_sql_service()
+    logger = get_logger()
+
+    sql_service.disconnect()
+    config_service.clear_db_credentials()
+    logger.log_user_action("Database credentials cleared", "")
+    return jsonify({"success": True})
+
+
+@app.route('/api/sql/connect', methods=['POST'])
+def connect_database():
+    """Attempt to connect to database"""
+    sql_service = get_sql_service()
+    logger = get_logger()
+
+    success, message = sql_service.connect()
+
+    if success:
+        return jsonify({"success": True, "message": message})
+    else:
+        return jsonify({"success": False, "error": message}), 400
+
+
+@app.route('/api/sql/disconnect', methods=['POST'])
+def disconnect_database():
+    """Disconnect from database"""
+    sql_service = get_sql_service()
+    logger = get_logger()
+
+    sql_service.disconnect()
+    logger.log_user_action("Database disconnected", "")
+    return jsonify({"success": True})
+
+
+@app.route('/api/sql/status', methods=['GET'])
+def get_db_status():
+    """Get database connection status"""
+    sql_service = get_sql_service()
+    return jsonify(sql_service.get_connection_status())
 
 
 # ============== XML GENERATION API ==============

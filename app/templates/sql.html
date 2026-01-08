@@ -17,14 +17,101 @@
             <i class="bi {{ 'bi-check-circle' if connected else 'bi-exclamation-triangle' }} me-2"></i>
             <div>
                 <strong>{{ 'Connected' if connected else 'Not Connected' }}</strong>
-                <span class="ms-2">{{ configured_count }}/5 queries configured</span>
-                {% if not connected %}
-                <br><small>Configure queries below. Database connection settings coming soon.</small>
+                <span class="ms-2">{{ configured_count }}/6 queries configured</span>
+                {% if not connected and not db_configured %}
+                <br><small>Configure database credentials below to connect.</small>
+                {% elif not connected and db_configured %}
+                <br><small>Credentials saved. Click "Connect" to establish connection.</small>
                 {% endif %}
             </div>
-            <button class="btn btn-sm btn-outline-dark ms-auto" onclick="testConnection()">
-                <i class="bi bi-plug"></i> Test Connection
+            {% if connected %}
+            <button class="btn btn-sm btn-outline-danger ms-auto" onclick="disconnectDb()">
+                <i class="bi bi-plug"></i> Disconnect
             </button>
+            {% else %}
+            <button class="btn btn-sm btn-outline-success ms-auto" onclick="connectDb()" {{ 'disabled' if not db_configured else '' }}>
+                <i class="bi bi-plug"></i> Connect
+            </button>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Database Credentials -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center" data-bs-toggle="collapse" data-bs-target="#credentials-panel" style="cursor: pointer;">
+                <span><i class="bi bi-key"></i> Database Credentials</span>
+                <span class="badge {{ 'bg-success' if db_configured else 'bg-secondary' }}">{{ 'Configured' if db_configured else 'Not Configured' }}</span>
+            </div>
+            <div class="collapse {{ 'show' if not db_configured else '' }}" id="credentials-panel">
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label small">ODBC Driver</label>
+                            <select class="form-select form-select-sm" id="db-driver">
+                                <option value="">Select driver...</option>
+                                <option value="ODBC Driver 18 for SQL Server" {{ 'selected' if db_credentials.get('driver') == 'ODBC Driver 18 for SQL Server' else '' }}>ODBC Driver 18 for SQL Server</option>
+                                <option value="ODBC Driver 17 for SQL Server" {{ 'selected' if db_credentials.get('driver') == 'ODBC Driver 17 for SQL Server' else '' }}>ODBC Driver 17 for SQL Server</option>
+                                <option value="SQL Server" {{ 'selected' if db_credentials.get('driver') == 'SQL Server' else '' }}>SQL Server (legacy)</option>
+                                <option value="Oracle in OraClient19Home1" {{ 'selected' if db_credentials.get('driver') == 'Oracle in OraClient19Home1' else '' }}>Oracle 19c</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label small">Server</label>
+                            <input type="text" class="form-control form-control-sm" id="db-server"
+                                   placeholder="e.g., server.domain.com" value="{{ db_credentials.get('server', '') }}">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label small">Database</label>
+                            <input type="text" class="form-control form-control-sm" id="db-database"
+                                   placeholder="e.g., ERP_Production" value="{{ db_credentials.get('database', '') }}">
+                        </div>
+                    </div>
+                    <div class="row g-3 mt-1">
+                        <div class="col-md-3">
+                            <div class="form-check mt-4">
+                                <input class="form-check-input" type="checkbox" id="db-trusted"
+                                       {{ 'checked' if db_credentials.get('trusted_connection') else '' }} onchange="toggleAuth()">
+                                <label class="form-check-label small" for="db-trusted">Windows Auth</label>
+                            </div>
+                        </div>
+                        <div class="col-md-3" id="username-group">
+                            <label class="form-label small">Username</label>
+                            <input type="text" class="form-control form-control-sm" id="db-username"
+                                   placeholder="Username" value="{{ db_credentials.get('username', '') }}">
+                        </div>
+                        <div class="col-md-3" id="password-group">
+                            <label class="form-label small">Password</label>
+                            <input type="password" class="form-control form-control-sm" id="db-password"
+                                   placeholder="{{ '********' if db_credentials.get('password') else 'Password' }}">
+                        </div>
+                        <div class="col-md-3 d-flex align-items-end">
+                            <button class="btn btn-primary btn-sm w-100" onclick="saveCredentials()">
+                                <i class="bi bi-save"></i> Save & Connect
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <details>
+                                <summary class="small text-muted" style="cursor: pointer;">Advanced: Raw Connection String</summary>
+                                <div class="mt-2">
+                                    <textarea class="form-control form-control-sm font-monospace" id="db-connection-string" rows="2"
+                                              placeholder="DRIVER={SQL Server};SERVER=...;DATABASE=...;UID=...;PWD=...">{{ db_credentials.get('connection_string', '') }}</textarea>
+                                    <small class="text-muted">Override with a full ODBC connection string. Leave empty to use fields above.</small>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-12">
+                            <span id="credentials-status" class="small"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -35,33 +122,39 @@
         <!-- Tab Navigation -->
         <ul class="nav nav-tabs" id="sqlTabs" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="fg-tab" data-bs-toggle="tab" data-bs-target="#fg-panel" type="button">
+                <button class="nav-link active text-dark" id="fg-tab" data-bs-toggle="tab" data-bs-target="#fg-panel" type="button">
+                    <span class="badge {{ 'bg-success' if sql_queries.fg_inventory else 'bg-secondary' }} me-1">{{ '✓' if sql_queries.fg_inventory else '?' }}</span>
                     <i class="bi bi-box-seam"></i> FG Inventory
-                    <span class="badge {{ 'bg-success' if sql_queries.fg_inventory else 'bg-secondary' }} ms-1">{{ '✓' if sql_queries.fg_inventory else '?' }}</span>
                 </button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="wip-tab" data-bs-toggle="tab" data-bs-target="#wip-panel" type="button">
+                <button class="nav-link text-dark" id="wip-tab" data-bs-toggle="tab" data-bs-target="#wip-panel" type="button">
+                    <span class="badge {{ 'bg-success' if sql_queries.wip_inventory else 'bg-secondary' }} me-1">{{ '✓' if sql_queries.wip_inventory else '?' }}</span>
                     <i class="bi bi-gear"></i> WIP Inventory
-                    <span class="badge {{ 'bg-success' if sql_queries.wip_inventory else 'bg-secondary' }} ms-1">{{ '✓' if sql_queries.wip_inventory else '?' }}</span>
                 </button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="jobs-tab" data-bs-toggle="tab" data-bs-target="#jobs-panel" type="button">
+                <button class="nav-link text-dark" id="jobs-tab" data-bs-toggle="tab" data-bs-target="#jobs-panel" type="button">
+                    <span class="badge {{ 'bg-success' if sql_queries.open_jobs else 'bg-secondary' }} me-1">{{ '✓' if sql_queries.open_jobs else '?' }}</span>
                     <i class="bi bi-list-task"></i> Open Jobs
-                    <span class="badge {{ 'bg-success' if sql_queries.open_jobs else 'bg-secondary' }} ms-1">{{ '✓' if sql_queries.open_jobs else '?' }}</span>
                 </button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="item-tab" data-bs-toggle="tab" data-bs-target="#item-panel" type="button">
+                <button class="nav-link text-dark" id="item-tab" data-bs-toggle="tab" data-bs-target="#item-panel" type="button">
+                    <span class="badge {{ 'bg-success' if sql_queries.item_mapping else 'bg-secondary' }} me-1">{{ '✓' if sql_queries.item_mapping else '?' }}</span>
                     <i class="bi bi-upc-scan"></i> Item Mapping
-                    <span class="badge {{ 'bg-success' if sql_queries.item_mapping else 'bg-secondary' }} ms-1">{{ '✓' if sql_queries.item_mapping else '?' }}</span>
                 </button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="movements-tab" data-bs-toggle="tab" data-bs-target="#movements-panel" type="button">
+                <button class="nav-link text-dark" id="movements-tab" data-bs-toggle="tab" data-bs-target="#movements-panel" type="button">
+                    <span class="badge {{ 'bg-success' if sql_queries.movements else 'bg-secondary' }} me-1">{{ '✓' if sql_queries.movements else '?' }}</span>
                     <i class="bi bi-arrow-left-right"></i> Movements
-                    <span class="badge {{ 'bg-success' if sql_queries.movements else 'bg-secondary' }} ms-1">{{ '✓' if sql_queries.movements else '?' }}</span>
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link text-dark" id="swfg-tab" data-bs-toggle="tab" data-bs-target="#swfg-panel" type="button">
+                    <span class="badge {{ 'bg-success' if sql_queries.sw_fg else 'bg-secondary' }} me-1">{{ '✓' if sql_queries.sw_fg else '?' }}</span>
+                    <i class="bi bi-building"></i> SW FG
                 </button>
             </li>
         </ul>
@@ -290,6 +383,51 @@ ORDER BY created_date">{{ sql_queries.movements or '' }}</textarea>
                     </div>
                 </div>
             </div>
+
+            <!-- Sherwin Williams FG -->
+            <div class="tab-pane fade" id="swfg-panel" role="tabpanel">
+                <div class="card border-top-0 rounded-0 rounded-bottom">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <label class="form-label fw-bold">Sherwin Williams FG Inventory Query</label>
+                                <p class="text-muted small mb-2">
+                                    Query to get Sherwin Williams finished goods inventory. Use <code>:part_number</code> and <code>:site</code> as parameters.
+                                    Must return: <code>item_code</code>, <code>job_number</code>, <code>quantity</code>, <code>location</code>, <code>lot_number</code>
+                                </p>
+                                <textarea class="form-control sql-editor" id="sql-sw_fg" rows="10"
+                                    placeholder="SELECT item_code, job_number, qty_on_hand as quantity, location, lot_number
+FROM sw_fg_inventory
+WHERE part_number = :part_number
+  AND site_code = :site
+  AND qty_on_hand > 0
+ORDER BY lot_number, qty_on_hand DESC">{{ sql_queries.sw_fg or '' }}</textarea>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card bg-light">
+                                    <div class="card-header">
+                                        <i class="bi bi-info-circle"></i> Expected Columns
+                                    </div>
+                                    <div class="card-body small">
+                                        <table class="table table-sm table-borderless mb-0">
+                                            <tr><td><code>item_code</code></td><td>Item/SKU code</td></tr>
+                                            <tr><td><code>job_number</code></td><td>Source job</td></tr>
+                                            <tr><td><code>quantity</code></td><td>Available qty</td></tr>
+                                            <tr><td><code>location</code></td><td>Warehouse location</td></tr>
+                                            <tr><td><code>lot_number</code></td><td>Lot/batch number</td></tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="mt-3">
+                                    <button class="btn btn-outline-primary btn-sm" onclick="testQuery('sw_fg')">
+                                        <i class="bi bi-play"></i> Test Query
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -362,7 +500,7 @@ ORDER BY created_date">{{ sql_queries.movements or '' }}</textarea>
 
 {% block extra_js %}
 <script>
-    const queryTypes = ['fg_inventory', 'wip_inventory', 'open_jobs', 'item_mapping', 'movements'];
+    const queryTypes = ['fg_inventory', 'wip_inventory', 'open_jobs', 'item_mapping', 'movements', 'sw_fg'];
 
     async function saveAllQueries() {
         const statusEl = document.getElementById('save-status');
@@ -425,12 +563,95 @@ ORDER BY created_date">{{ sql_queries.movements or '' }}</textarea>
         }
     }
 
-    function testConnection() {
-        showTestResults('Testing database connection...', false);
-        setTimeout(() => {
-            showTestResults('Database connection not configured.\n\nTo connect to your ERP database:\n1. Configure connection string in settings\n2. Ensure network access to database server\n3. Test each query individually', false);
-        }, 500);
+    // ============== DATABASE CONNECTION ==============
+
+    function toggleAuth() {
+        const trusted = document.getElementById('db-trusted').checked;
+        document.getElementById('username-group').style.opacity = trusted ? '0.5' : '1';
+        document.getElementById('password-group').style.opacity = trusted ? '0.5' : '1';
+        document.getElementById('db-username').disabled = trusted;
+        document.getElementById('db-password').disabled = trusted;
     }
+
+    async function saveCredentials() {
+        const statusEl = document.getElementById('credentials-status');
+        statusEl.innerHTML = '<span class="text-muted"><i class="bi bi-hourglass-split"></i> Saving...</span>';
+
+        // Check for raw connection string first
+        const rawConnStr = document.getElementById('db-connection-string').value.trim();
+
+        const credentials = rawConnStr ? {
+            connection_string: rawConnStr
+        } : {
+            driver: document.getElementById('db-driver').value,
+            server: document.getElementById('db-server').value.trim(),
+            database: document.getElementById('db-database').value.trim(),
+            username: document.getElementById('db-username').value.trim(),
+            password: document.getElementById('db-password').value,
+            trusted_connection: document.getElementById('db-trusted').checked
+        };
+
+        try {
+            // Save credentials
+            const saveResponse = await fetch('/api/sql/credentials', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(credentials)
+            });
+
+            const saveResult = await saveResponse.json();
+            if (!saveResult.success) {
+                statusEl.innerHTML = `<span class="text-danger"><i class="bi bi-x-circle"></i> ${saveResult.error}</span>`;
+                return;
+            }
+
+            statusEl.innerHTML = '<span class="text-muted"><i class="bi bi-hourglass-split"></i> Connecting...</span>';
+
+            // Try to connect
+            const connectResponse = await fetch('/api/sql/connect', { method: 'POST' });
+            const connectResult = await connectResponse.json();
+
+            if (connectResult.success) {
+                statusEl.innerHTML = '<span class="text-success"><i class="bi bi-check-circle"></i> Connected!</span>';
+                setTimeout(() => location.reload(), 1000);
+            } else {
+                statusEl.innerHTML = `<span class="text-warning"><i class="bi bi-exclamation-triangle"></i> Saved but connection failed: ${connectResult.error}</span>`;
+            }
+        } catch (err) {
+            statusEl.innerHTML = `<span class="text-danger"><i class="bi bi-x-circle"></i> ${err.message}</span>`;
+        }
+    }
+
+    async function connectDb() {
+        try {
+            const response = await fetch('/api/sql/connect', { method: 'POST' });
+            const result = await response.json();
+
+            if (result.success) {
+                location.reload();
+            } else {
+                alert('Connection failed: ' + result.error);
+            }
+        } catch (err) {
+            alert('Connection failed: ' + err.message);
+        }
+    }
+
+    async function disconnectDb() {
+        try {
+            await fetch('/api/sql/disconnect', { method: 'POST' });
+            location.reload();
+        } catch (err) {
+            alert('Disconnect failed: ' + err.message);
+        }
+    }
+
+    function testConnection() {
+        connectDb();
+    }
+
+    // Initialize auth toggle state
+    toggleAuth();
 
     function showTestResults(text, isError) {
         const panel = document.getElementById('test-results-panel');
