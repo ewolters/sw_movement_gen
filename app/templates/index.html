@@ -1,0 +1,505 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - MCC Packaging Middleware{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h4><i class="bi bi-speedometer2"></i> Dashboard</h4>
+    </div>
+</div>
+
+<!-- Summary Cards -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card summary-card success">
+            <div class="number" id="stock-jobs-count">{{ summary.stock_jobs }}</div>
+            <div class="label">Stock Jobs Today</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card summary-card rush">
+            <div class="number" id="rush-jobs-count">{{ summary.rush_jobs }}</div>
+            <div class="label">Rush Jobs Today</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card summary-card info">
+            <div class="number" id="movements-count">{{ summary.movements }}</div>
+            <div class="label">Movements Today</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card summary-card alert">
+            <div class="number" id="alerts-count">{{ summary.alerts }}</div>
+            <div class="label">Alerts</div>
+        </div>
+    </div>
+</div>
+
+<!-- File Upload Section -->
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-file-earmark-excel"></i> Forecast File (.xlsx)</span>
+                {% if forecast_folder_configured %}
+                <span class="badge config-badge"><i class="bi bi-folder-check"></i> Folder Configured</span>
+                {% endif %}
+            </div>
+            <div class="card-body">
+                {% if forecast_folder_configured %}
+                <div class="folder-configured">
+                    <i class="bi bi-folder-fill text-info"></i>
+                    <strong>Hot Folder:</strong> {{ config.forecast_folder }}
+                    <div class="mt-2 small text-muted">
+                        <i class="bi bi-info-circle"></i> Manual upload disabled. Files loaded automatically from configured folder.
+                    </div>
+                    {% if forecast_files %}
+                    <div class="mt-2">
+                        <strong>Files found:</strong>
+                        <select class="form-select form-select-sm mt-1" id="forecast-file-select" onchange="loadForecastFromFolder()">
+                            <option value="">Select a file to load...</option>
+                            {% for f in forecast_files %}
+                            <option value="{{ f }}" {% if f == forecast_loaded %}selected{% endif %}>{{ f }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    {% else %}
+                    <div class="mt-2 text-warning">
+                        <i class="bi bi-exclamation-triangle"></i> No .xlsx files found in folder
+                    </div>
+                    {% endif %}
+                </div>
+                {% else %}
+                <div class="file-drop-zone" id="forecast-drop">
+                    <i class="bi bi-cloud-upload"></i>
+                    <p class="mb-0 mt-2">Drop forecast file here or click to browse</p>
+                    <input type="file" id="forecast-file" accept=".xlsx,.xls" hidden>
+                </div>
+                {% endif %}
+                {% if forecast_loaded %}
+                <div class="loaded-file">
+                    <i class="bi bi-check-circle text-success"></i>
+                    <strong>Loaded:</strong> {{ forecast_loaded }}
+                </div>
+                {% endif %}
+                <div id="forecast-status" class="mt-2"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-file-earmark-text"></i> Purchase Order File (.txt)</span>
+                {% if po_folder_configured %}
+                <span class="badge config-badge"><i class="bi bi-folder-check"></i> Folder Configured</span>
+                {% endif %}
+            </div>
+            <div class="card-body">
+                {% if po_folder_configured %}
+                <div class="folder-configured">
+                    <i class="bi bi-folder-fill text-info"></i>
+                    <strong>Hot Folder:</strong> {{ config.po_folder }}
+                    <div class="mt-2 small text-muted">
+                        <i class="bi bi-info-circle"></i> Manual upload disabled. Files processed automatically at {{ config.scheduler_hour }}:{{ '%02d'|format(config.scheduler_minute) }}.
+                    </div>
+                    {% if po_files %}
+                    <div class="mt-2">
+                        <strong>Files found:</strong>
+                        <select class="form-select form-select-sm mt-1" id="po-file-select" onchange="loadPOFromFolder()">
+                            <option value="">Select a file to load...</option>
+                            {% for f in po_files %}
+                            <option value="{{ f }}" {% if f == po_loaded %}selected{% endif %}>{{ f }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    {% else %}
+                    <div class="mt-2 text-warning">
+                        <i class="bi bi-exclamation-triangle"></i> No .txt files found in folder
+                    </div>
+                    {% endif %}
+                </div>
+                {% else %}
+                <div class="file-drop-zone" id="po-drop">
+                    <i class="bi bi-cloud-upload"></i>
+                    <p class="mb-0 mt-2">Drop PO file here or click to browse</p>
+                    <input type="file" id="po-file" accept=".txt" hidden>
+                </div>
+                {% endif %}
+                {% if po_loaded %}
+                <div class="loaded-file">
+                    <i class="bi bi-check-circle text-success"></i>
+                    <strong>Loaded:</strong> {{ po_loaded }}
+                </div>
+                {% endif %}
+                <div id="po-status" class="mt-2"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Folder Configuration -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-folder-symlink"></i> Hot Folder Configuration</span>
+                <small class="text-light opacity-75">Saved to config/settings.json</small>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="form-label small text-muted">Forecast Folder Path (.xlsx files)</label>
+                        <div class="input-group input-group-sm">
+                            <input type="text" class="form-control" id="config-forecast-folder"
+                                   placeholder="e.g., C:\Data\Forecasts" value="{{ config.forecast_folder or '' }}">
+                            <button class="btn btn-outline-secondary" type="button" onclick="clearField('forecast')">
+                                <i class="bi bi-x-lg"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label small text-muted">PO Hot Folder Path (.txt files)</label>
+                        <div class="input-group input-group-sm">
+                            <input type="text" class="form-control" id="config-po-folder"
+                                   placeholder="e.g., C:\Data\PurchaseOrders" value="{{ config.po_folder or '' }}">
+                            <button class="btn btn-outline-secondary" type="button" onclick="clearField('po')">
+                                <i class="bi bi-x-lg"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label small text-muted">XML Output Folder (generated files)</label>
+                        <div class="input-group input-group-sm">
+                            <input type="text" class="form-control" id="config-xml-folder"
+                                   placeholder="e.g., C:\Data\XMLOutput" value="{{ config.xml_output_folder or '' }}">
+                            <button class="btn btn-outline-secondary" type="button" onclick="clearField('xml')">
+                                <i class="bi bi-x-lg"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-2">
+                        <label class="form-label small text-muted">Daily Run Time</label>
+                        <div class="input-group input-group-sm">
+                            <input type="number" class="form-control" id="config-scheduler-hour"
+                                   min="0" max="23" value="{{ config.scheduler_hour }}" style="max-width: 60px;">
+                            <span class="input-group-text">:</span>
+                            <input type="number" class="form-control" id="config-scheduler-minute"
+                                   min="0" max="59" value="{{ config.scheduler_minute }}" style="max-width: 60px;">
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <button class="btn btn-success btn-sm" onclick="saveConfig()">
+                            <i class="bi bi-save"></i> Save Configuration
+                        </button>
+                        <span id="config-status" class="ms-2 small"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Scheduler Status -->
+{% if po_folder_configured or forecast_folder_configured %}
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <i class="bi bi-clock-history"></i> Scheduler Status
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <strong>Next Scheduled Run:</strong>
+                        <div id="next-run-time">{{ next_run_time or 'Calculating...' }}</div>
+                    </div>
+                    <div class="col-md-4">
+                        <strong>Last Run:</strong>
+                        <div id="last-run-time">{{ last_run_time or 'Not yet run today' }}</div>
+                    </div>
+                    <div class="col-md-4">
+                        <button class="btn btn-warning" onclick="triggerManualRun()">
+                            <i class="bi bi-play-fill"></i> Run Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Alerts Section -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-exclamation-triangle"></i> Active Alerts</span>
+                <button class="btn btn-sm btn-outline-light" onclick="refreshAlerts()">
+                    <i class="bi bi-arrow-clockwise"></i> Refresh
+                </button>
+            </div>
+            <div class="card-body">
+                <div id="alerts-container">
+                    <p class="text-muted">No alerts. Upload PO and Forecast files to see comparison alerts.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <i class="bi bi-lightning"></i> Quick Actions
+            </div>
+            <div class="card-body">
+                <a href="/comparison" class="btn btn-primary me-2">
+                    <i class="bi bi-table"></i> View Comparison
+                </a>
+                <a href="/jobs" class="btn btn-outline-primary me-2">
+                    <i class="bi bi-list-task"></i> View Jobs
+                </a>
+                <a href="/sql" class="btn btn-outline-primary me-2">
+                    <i class="bi bi-database"></i> SQL Query
+                </a>
+                <a href="/logs" class="btn btn-outline-secondary">
+                    <i class="bi bi-journal-text"></i> View Logs
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // File upload handlers (only if not folder-configured)
+    const forecastFileInput = document.getElementById('forecast-file');
+    const poFileInput = document.getElementById('po-file');
+
+    if (forecastFileInput) {
+        forecastFileInput.addEventListener('change', function(e) {
+            uploadFile(this.files[0], '/api/upload/forecast', 'forecast-status');
+        });
+    }
+
+    if (poFileInput) {
+        poFileInput.addEventListener('change', function(e) {
+            uploadFile(this.files[0], '/api/upload/po', 'po-status');
+        });
+    }
+
+    async function uploadFile(file, url, statusId) {
+        const statusEl = document.getElementById(statusId);
+        statusEl.innerHTML = '<div class="spinner-border spinner-border-sm" role="status"></div> Uploading...';
+
+        const formData = new FormData();
+        formData.append('file', file);
+
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                body: formData
+            });
+            const data = await response.json();
+
+            if (data.success) {
+                statusEl.innerHTML = `<div class="alert alert-success py-2">
+                    <i class="bi bi-check-circle"></i> Loaded ${data.records || data.line_items} records
+                </div>`;
+                refreshSummary();
+                refreshAlerts();
+            } else {
+                statusEl.innerHTML = `<div class="alert alert-danger py-2">
+                    <i class="bi bi-x-circle"></i> ${data.error}
+                </div>`;
+            }
+        } catch (err) {
+            statusEl.innerHTML = `<div class="alert alert-danger py-2">
+                <i class="bi bi-x-circle"></i> Upload failed: ${err.message}
+            </div>`;
+        }
+    }
+
+    // Load from configured folder
+    async function loadForecastFromFolder() {
+        const select = document.getElementById('forecast-file-select');
+        const filename = select.value;
+        if (!filename) return;
+
+        const statusEl = document.getElementById('forecast-status');
+        statusEl.innerHTML = '<div class="spinner-border spinner-border-sm" role="status"></div> Loading...';
+
+        try {
+            const response = await fetch('/api/load/forecast', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ filename })
+            });
+            const data = await response.json();
+
+            if (data.success) {
+                statusEl.innerHTML = `<div class="alert alert-success py-2">
+                    <i class="bi bi-check-circle"></i> Loaded ${data.records} records
+                </div>`;
+                refreshSummary();
+                refreshAlerts();
+            } else {
+                statusEl.innerHTML = `<div class="alert alert-danger py-2">
+                    <i class="bi bi-x-circle"></i> ${data.error}
+                </div>`;
+            }
+        } catch (err) {
+            statusEl.innerHTML = `<div class="alert alert-danger py-2">
+                <i class="bi bi-x-circle"></i> Load failed: ${err.message}
+            </div>`;
+        }
+    }
+
+    async function loadPOFromFolder() {
+        const select = document.getElementById('po-file-select');
+        const filename = select.value;
+        if (!filename) return;
+
+        const statusEl = document.getElementById('po-status');
+        statusEl.innerHTML = '<div class="spinner-border spinner-border-sm" role="status"></div> Loading...';
+
+        try {
+            const response = await fetch('/api/load/po', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ filename })
+            });
+            const data = await response.json();
+
+            if (data.success) {
+                statusEl.innerHTML = `<div class="alert alert-success py-2">
+                    <i class="bi bi-check-circle"></i> Loaded ${data.line_items} line items
+                </div>`;
+                refreshSummary();
+                refreshAlerts();
+            } else {
+                statusEl.innerHTML = `<div class="alert alert-danger py-2">
+                    <i class="bi bi-x-circle"></i> ${data.error}
+                </div>`;
+            }
+        } catch (err) {
+            statusEl.innerHTML = `<div class="alert alert-danger py-2">
+                <i class="bi bi-x-circle"></i> Load failed: ${err.message}
+            </div>`;
+        }
+    }
+
+    async function triggerManualRun() {
+        if (!confirm('Run hot folder processing now?')) return;
+
+        try {
+            const response = await fetch('/api/process/run', { method: 'POST' });
+            const data = await response.json();
+
+            if (data.success) {
+                alert('Processing completed: ' + data.message);
+                location.reload();
+            } else {
+                alert('Processing failed: ' + data.error);
+            }
+        } catch (err) {
+            alert('Failed to trigger processing: ' + err.message);
+        }
+    }
+
+    async function refreshSummary() {
+        try {
+            const response = await fetch('/api/logs/summary');
+            const data = await response.json();
+            document.getElementById('stock-jobs-count').textContent = data.stock_jobs;
+            document.getElementById('rush-jobs-count').textContent = data.rush_jobs;
+            document.getElementById('movements-count').textContent = data.movements;
+            document.getElementById('alerts-count').textContent = data.alerts;
+        } catch (err) {
+            console.error('Failed to refresh summary:', err);
+        }
+    }
+
+    async function refreshAlerts() {
+        try {
+            const response = await fetch('/api/alerts');
+            const data = await response.json();
+            const container = document.getElementById('alerts-container');
+
+            if (data.alerts.length === 0) {
+                container.innerHTML = '<p class="text-muted">No alerts.</p>';
+                return;
+            }
+
+            let html = '';
+            data.alerts.forEach(alert => {
+                const icon = alert.type === 'exceeds_forecast' ? 'exclamation-triangle' : 'box-arrow-down';
+                const color = alert.type === 'exceeds_forecast' ? 'warning' : 'danger';
+                html += `<div class="alert alert-${color} py-2 mb-2">
+                    <i class="bi bi-${icon}"></i>
+                    <strong>${alert.part}</strong>: ${alert.message}
+                </div>`;
+            });
+
+            if (data.total > data.alerts.length) {
+                html += `<p class="text-muted small">... and ${data.total - data.alerts.length} more alerts</p>`;
+            }
+
+            container.innerHTML = html;
+            document.getElementById('alerts-count').textContent = data.total;
+        } catch (err) {
+            console.error('Failed to refresh alerts:', err);
+        }
+    }
+
+    // Configuration functions
+    function clearField(type) {
+        document.getElementById(`config-${type}-folder`).value = '';
+    }
+
+    async function saveConfig() {
+        const statusEl = document.getElementById('config-status');
+        statusEl.innerHTML = '<span class="text-muted"><i class="bi bi-hourglass-split"></i> Saving...</span>';
+
+        const settings = {
+            forecast_folder: document.getElementById('config-forecast-folder').value.trim() || null,
+            po_folder: document.getElementById('config-po-folder').value.trim() || null,
+            xml_output_folder: document.getElementById('config-xml-folder').value.trim() || null,
+            scheduler_hour: parseInt(document.getElementById('config-scheduler-hour').value) || 7,
+            scheduler_minute: parseInt(document.getElementById('config-scheduler-minute').value) || 0
+        };
+
+        try {
+            const response = await fetch('/api/config', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(settings)
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                statusEl.innerHTML = '<span class="text-success"><i class="bi bi-check-circle"></i> Saved! Reloading...</span>';
+                setTimeout(() => location.reload(), 1000);
+            } else {
+                statusEl.innerHTML = `<span class="text-danger"><i class="bi bi-x-circle"></i> ${result.errors ? result.errors.join(', ') : 'Error saving'}</span>`;
+            }
+        } catch (err) {
+            statusEl.innerHTML = `<span class="text-danger"><i class="bi bi-x-circle"></i> ${err.message}</span>`;
+        }
+    }
+
+    // Initial refresh
+    refreshAlerts();
+</script>
+{% endblock %}

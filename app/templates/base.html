@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}MCC Packaging Middleware{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        :root {
+            --mcc-blue: #6BC4E8;
+            --mcc-blue-dark: #4BA8CC;
+            --mcc-yellow: #FFD100;
+            --mcc-yellow-dark: #E6BC00;
+            --mcc-green: #00A651;
+            --mcc-green-dark: #008C44;
+            --mcc-black: #231F20;
+            --mcc-gray: #58595B;
+        }
+
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .navbar {
+            background-color: var(--mcc-black) !important;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            color: white !important;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-right: 30px;
+        }
+
+        .navbar-brand img {
+            height: 32px;
+        }
+
+        .navbar-nav {
+            margin-left: 10px;
+        }
+
+        .nav-link {
+            color: rgba(255,255,255,0.85) !important;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: white !important;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 4px;
+        }
+
+        .card {
+            border: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            background-color: var(--mcc-black);
+            color: white;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background-color: var(--mcc-blue);
+            border-color: var(--mcc-blue);
+            color: var(--mcc-black);
+            font-weight: 500;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--mcc-blue-dark);
+            border-color: var(--mcc-blue-dark);
+            color: var(--mcc-black);
+        }
+
+        .btn-success {
+            background-color: var(--mcc-green);
+            border-color: var(--mcc-green);
+        }
+
+        .btn-success:hover {
+            background-color: var(--mcc-green-dark);
+            border-color: var(--mcc-green-dark);
+        }
+
+        .btn-warning {
+            background-color: var(--mcc-yellow);
+            border-color: var(--mcc-yellow);
+            color: var(--mcc-black);
+        }
+
+        .btn-warning:hover {
+            background-color: var(--mcc-yellow-dark);
+            border-color: var(--mcc-yellow-dark);
+            color: var(--mcc-black);
+        }
+
+        .alert-warning {
+            background-color: #fff9e6;
+            border-color: var(--mcc-yellow);
+        }
+
+        .alert-info {
+            background-color: #e8f7fc;
+            border-color: var(--mcc-blue);
+        }
+
+        .alert-success {
+            background-color: #e6f5ed;
+            border-color: var(--mcc-green);
+        }
+
+        .summary-card {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .summary-card .number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--mcc-black);
+        }
+
+        .summary-card .label {
+            color: var(--mcc-gray);
+            font-size: 0.9rem;
+        }
+
+        .summary-card.rush .number {
+            color: #dc3545;
+        }
+
+        .summary-card.alert .number {
+            color: #dc3545;
+        }
+
+        .summary-card.success .number {
+            color: var(--mcc-green);
+        }
+
+        .summary-card.info .number {
+            color: var(--mcc-blue-dark);
+        }
+
+        .table-container {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .status-ok {
+            color: var(--mcc-green);
+            font-weight: 600;
+        }
+
+        .status-rush {
+            color: #dc3545;
+            font-weight: 600;
+        }
+
+        .status-movement {
+            color: var(--mcc-blue-dark);
+            font-weight: 600;
+        }
+
+        .log-entry {
+            border-bottom: 1px solid #eee;
+            padding: 8px 0;
+        }
+
+        .log-type {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .log-type-FILE { background-color: #e8f7fc; color: var(--mcc-blue-dark); }
+        .log-type-JOB { background-color: #e6f5ed; color: var(--mcc-green); }
+        .log-type-MOVEMENT { background-color: #e8f7fc; color: var(--mcc-blue-dark); }
+        .log-type-ALERT { background-color: #fff9e6; color: #856404; }
+        .log-type-ERROR { background-color: #f8d7da; color: #842029; }
+        .log-type-SQL { background-color: #e2e3e5; color: var(--mcc-gray); }
+        .log-type-USER { background-color: #f8f9fa; color: var(--mcc-gray); }
+
+        .sql-editor {
+            font-family: 'Consolas', 'Monaco', monospace;
+            min-height: 150px;
+        }
+
+        .results-table {
+            font-size: 0.875rem;
+        }
+
+        .file-drop-zone {
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .file-drop-zone:hover, .file-drop-zone.dragover {
+            border-color: var(--mcc-green);
+            background-color: #f8fff8;
+        }
+
+        .file-drop-zone.disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+            background-color: #f5f5f5;
+        }
+
+        .file-drop-zone.disabled:hover {
+            border-color: #ccc;
+            background-color: #f5f5f5;
+        }
+
+        .file-drop-zone i {
+            font-size: 3rem;
+            color: #ccc;
+        }
+
+        .loaded-file {
+            background-color: #e6f5ed;
+            padding: 10px 15px;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+
+        .folder-configured {
+            background-color: #e8f7fc;
+            padding: 10px 15px;
+            border-radius: 4px;
+            margin-top: 10px;
+            border-left: 3px solid var(--mcc-blue);
+        }
+
+        .config-badge {
+            background-color: var(--mcc-yellow);
+            color: var(--mcc-black);
+            font-weight: 500;
+        }
+
+        /* MCC Logo colors accent bar */
+        .navbar::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(to right,
+                var(--mcc-yellow) 0%, var(--mcc-yellow) 33%,
+                var(--mcc-green) 33%, var(--mcc-green) 66%,
+                var(--mcc-blue) 66%, var(--mcc-blue) 100%);
+        }
+
+        .navbar {
+            position: relative;
+        }
+
+        /* Settings icon */
+        .settings-btn {
+            color: rgba(255,255,255,0.85) !important;
+            transition: all 0.2s;
+        }
+
+        .settings-btn:hover {
+            color: var(--mcc-yellow) !important;
+            transform: rotate(30deg);
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark mb-4">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <svg width="40" height="32" viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Yellow square -->
+                    <rect x="0" y="20" width="30" height="30" fill="#FFD100"/>
+                    <!-- Blue rounded square -->
+                    <rect x="20" y="0" width="30" height="30" rx="8" fill="#6BC4E8"/>
+                    <!-- Green overlap -->
+                    <rect x="20" y="20" width="15" height="20" fill="#00A651"/>
+                    <!-- MCC text -->
+                    <text x="55" y="35" font-family="Arial Black, sans-serif" font-size="28" font-weight="900" fill="white">mcc</text>
+                </svg>
+                <span>Packaging Middleware</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'index' %}active{% endif %}" href="/">
+                            <i class="bi bi-speedometer2"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'comparison' %}active{% endif %}" href="/comparison">
+                            <i class="bi bi-table"></i> Comparison
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'jobs' %}active{% endif %}" href="/jobs">
+                            <i class="bi bi-list-task"></i> Jobs
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'sql_executor' %}active{% endif %}" href="/sql">
+                            <i class="bi bi-database"></i> SQL Query
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'logs_dashboard' %}active{% endif %}" href="/logs">
+                            <i class="bi bi-journal-text"></i> Logs
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link settings-btn" href="#" data-bs-toggle="modal" data-bs-target="#settingsModal" title="Settings">
+                            <i class="bi bi-gear-fill"></i>
+                        </a>
+                    </li>
+                </ul>
+                <span class="navbar-text ms-2">
+                    <small id="current-time"></small>
+                </span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid px-4">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal fade" id="settingsModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: var(--mcc-black); color: white;">
+                    <h5 class="modal-title"><i class="bi bi-gear-fill"></i> Settings</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <h6 class="text-muted mb-3">Hot Folder Configuration</h6>
+                    <p class="small text-muted">Configure folder paths for automatic file loading. When a folder is configured, manual upload is disabled.</p>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Forecast Folder (.xlsx files)</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="config-forecast-folder"
+                                   placeholder="e.g., C:\Data\Forecasts" value="{{ config.forecast_folder or '' }}">
+                            <button class="btn btn-outline-secondary" type="button" onclick="clearConfigField('forecast')">
+                                <i class="bi bi-x-lg"></i>
+                            </button>
+                        </div>
+                        <div class="form-text">Path to folder containing forecast Excel files</div>
+                        <div id="forecast-folder-status" class="mt-2"></div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">PO Hot Folder (.txt files)</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="config-po-folder"
+                                   placeholder="e.g., C:\Data\PurchaseOrders" value="{{ config.po_folder or '' }}">
+                            <button class="btn btn-outline-secondary" type="button" onclick="clearConfigField('po')">
+                                <i class="bi bi-x-lg"></i>
+                            </button>
+                        </div>
+                        <div class="form-text">Path to hot folder containing PO text files</div>
+                        <div id="po-folder-status" class="mt-2"></div>
+                    </div>
+
+                    <hr>
+
+                    <h6 class="text-muted mb-3">Scheduler Settings</h6>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold">Daily Run Time</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" id="config-scheduler-hour"
+                                       min="0" max="23" value="{{ config.scheduler_hour }}" style="max-width: 80px;">
+                                <span class="input-group-text">:</span>
+                                <input type="number" class="form-control" id="config-scheduler-minute"
+                                       min="0" max="59" value="{{ config.scheduler_minute }}" style="max-width: 80px;">
+                            </div>
+                            <div class="form-text">24-hour format (local time)</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveSettings()">
+                        <i class="bi bi-check-lg"></i> Save Settings
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Update time
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('current-time').textContent = now.toLocaleString();
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+
+        // File drop zone handling
+        document.querySelectorAll('.file-drop-zone:not(.disabled)').forEach(zone => {
+            const input = zone.querySelector('input[type="file"]');
+            if (!input) return;
+
+            zone.addEventListener('click', () => input.click());
+
+            zone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                zone.classList.add('dragover');
+            });
+
+            zone.addEventListener('dragleave', () => {
+                zone.classList.remove('dragover');
+            });
+
+            zone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                zone.classList.remove('dragover');
+                if (e.dataTransfer.files.length) {
+                    input.files = e.dataTransfer.files;
+                    input.dispatchEvent(new Event('change'));
+                }
+            });
+        });
+
+        // Settings functions
+        function clearConfigField(type) {
+            document.getElementById(`config-${type}-folder`).value = '';
+        }
+
+        async function saveSettings() {
+            const settings = {
+                forecast_folder: document.getElementById('config-forecast-folder').value.trim() || null,
+                po_folder: document.getElementById('config-po-folder').value.trim() || null,
+                scheduler_hour: parseInt(document.getElementById('config-scheduler-hour').value) || 7,
+                scheduler_minute: parseInt(document.getElementById('config-scheduler-minute').value) || 0
+            };
+
+            try {
+                const response = await fetch('/api/config', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(settings)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    // Close modal and reload page to reflect changes
+                    bootstrap.Modal.getInstance(document.getElementById('settingsModal')).hide();
+                    location.reload();
+                } else {
+                    alert('Error saving settings: ' + (result.error || 'Unknown error'));
+                }
+            } catch (err) {
+                alert('Failed to save settings: ' + err.message);
+            }
+        }
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

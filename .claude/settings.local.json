@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python:*)",
+      "Bash(where:*)",
+      "Bash(py:*)",
+      "Bash(copy \"C:\\Users\\ewolt\\juniperware\\PAINT ON DEMAND\\mcc-logo.png\" \"C:\\Users\\ewolt\\juniperware\\PAINT ON DEMAND\\app\\static\\img\\mcc-logo.png\")",
+      "Bash(git init:*)",
+      "Bash(git remote add:*)",
+      "Bash(git add:*)"
+    ]
+  }
+}

@@ -1,0 +1,246 @@
+{% extends "base.html" %}
+
+{% block title %}Logs - SW Packaging Middleware{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h4><i class="bi bi-journal-text"></i> Activity Logs</h4>
+        <p class="text-muted">Review system activity for compliance and audit trail</p>
+    </div>
+</div>
+
+<!-- Summary Cards -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card summary-card">
+            <div class="number text-primary" id="summary-stock">0</div>
+            <div class="label">Stock Jobs</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card summary-card rush">
+            <div class="number" id="summary-rush">0</div>
+            <div class="label">Rush Jobs</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card summary-card">
+            <div class="number text-info" id="summary-movements">0</div>
+            <div class="label">Movements</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card summary-card alert">
+            <div class="number" id="summary-errors">0</div>
+            <div class="label">Errors</div>
+        </div>
+    </div>
+</div>
+
+<!-- Filters -->
+<div class="row mb-3">
+    <div class="col-md-3">
+        <label class="form-label small">Date</label>
+        <select class="form-select" id="filter-date">
+            {% for date in available_dates %}
+            <option value="{{ date }}">{{ date }}</option>
+            {% endfor %}
+            {% if not available_dates %}
+            <option value="{{ now().strftime('%Y-%m-%d') }}" selected>Today</option>
+            {% endif %}
+        </select>
+    </div>
+    <div class="col-md-2">
+        <label class="form-label small">Type</label>
+        <select class="form-select" id="filter-type">
+            <option value="">All Types</option>
+            <option value="FILE">File Processing</option>
+            <option value="JOB">Jobs</option>
+            <option value="MOVEMENT">Movements</option>
+            <option value="ALERT">Alerts</option>
+            <option value="SQL">SQL Queries</option>
+            <option value="ERROR">Errors</option>
+            <option value="USER">User Actions</option>
+        </select>
+    </div>
+    <div class="col-md-3">
+        <label class="form-label small">Search</label>
+        <input type="text" class="form-control" id="filter-search" placeholder="Search logs...">
+    </div>
+    <div class="col-md-2">
+        <label class="form-label small">&nbsp;</label>
+        <button class="btn btn-primary d-block" onclick="loadLogs()">
+            <i class="bi bi-search"></i> Filter
+        </button>
+    </div>
+    <div class="col-md-2 text-end">
+        <label class="form-label small">&nbsp;</label>
+        <button class="btn btn-outline-secondary d-block w-100" onclick="exportLogs()">
+            <i class="bi bi-download"></i> Export CSV
+        </button>
+    </div>
+</div>
+
+<!-- Live Tail Toggle -->
+<div class="row mb-3">
+    <div class="col-12">
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="live-tail" onchange="toggleLiveTail()">
+            <label class="form-check-label" for="live-tail">
+                <i class="bi bi-broadcast"></i> Live Tail (auto-refresh)
+            </label>
+        </div>
+    </div>
+</div>
+
+<!-- Log Entries -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span>Log Entries</span>
+                <span class="badge bg-secondary" id="log-count">0 entries</span>
+            </div>
+            <div class="card-body p-0" style="max-height: 500px; overflow-y: auto;">
+                <div id="log-entries">
+                    <div class="text-center text-muted py-4">
+                        <i class="bi bi-journal"></i> Loading logs...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- File Location Info -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <i class="bi bi-folder"></i> Log Files Location
+            </div>
+            <div class="card-body">
+                <p class="mb-2">Log files are stored in CSV format for easy Excel access:</p>
+                <code>outputs/logs/YYYY-MM-DD_activity.csv</code>
+                <p class="mt-2 mb-0 small text-muted">
+                    The GM can open these files directly in Excel for compliance review.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    let liveTailInterval = null;
+    let logData = [];
+
+    async function loadLogs() {
+        const date = document.getElementById('filter-date').value || new Date().toISOString().slice(0, 10);
+        const type = document.getElementById('filter-type').value;
+        const search = document.getElementById('filter-search').value;
+
+        const params = new URLSearchParams({ date, type, search });
+
+        try {
+            const response = await fetch(`/api/logs/data?${params}`);
+            const data = await response.json();
+
+            logData = data.entries;
+            renderLogs(data.entries);
+            document.getElementById('log-count').textContent = `${data.total} entries`;
+
+            // Update summary
+            loadSummary();
+
+        } catch (err) {
+            document.getElementById('log-entries').innerHTML =
+                `<div class="text-center text-danger py-4">
+                    <i class="bi bi-x-circle"></i> Failed to load logs: ${err.message}
+                </div>`;
+        }
+    }
+
+    async function loadSummary() {
+        try {
+            const response = await fetch('/api/logs/summary');
+            const data = await response.json();
+            document.getElementById('summary-stock').textContent = data.stock_jobs;
+            document.getElementById('summary-rush').textContent = data.rush_jobs;
+            document.getElementById('summary-movements').textContent = data.movements;
+            document.getElementById('summary-errors').textContent = data.errors;
+        } catch (err) {
+            console.error('Failed to load summary:', err);
+        }
+    }
+
+    function renderLogs(entries) {
+        const container = document.getElementById('log-entries');
+
+        if (entries.length === 0) {
+            container.innerHTML = '<div class="text-center text-muted py-4">No log entries for this date/filter</div>';
+            return;
+        }
+
+        container.innerHTML = entries.map(entry => `
+            <div class="log-entry px-3">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <span class="log-type log-type-${entry.type}">${entry.type}</span>
+                        <span class="ms-2">${entry.message}</span>
+                        ${entry.part_number ? `<code class="ms-2">${entry.part_number}</code>` : ''}
+                    </div>
+                    <small class="text-muted">${entry.timestamp}</small>
+                </div>
+                ${entry.details ? `<div class="small text-muted mt-1">${entry.details}</div>` : ''}
+                ${entry.xml_file ? `<div class="small"><i class="bi bi-file-earmark-code"></i> ${entry.xml_file}</div>` : ''}
+            </div>
+        `).join('');
+    }
+
+    function toggleLiveTail() {
+        const enabled = document.getElementById('live-tail').checked;
+        if (enabled) {
+            liveTailInterval = setInterval(loadLogs, 5000);
+        } else {
+            clearInterval(liveTailInterval);
+            liveTailInterval = null;
+        }
+    }
+
+    function exportLogs() {
+        if (logData.length === 0) {
+            alert('No logs to export');
+            return;
+        }
+
+        const date = document.getElementById('filter-date').value || new Date().toISOString().slice(0, 10);
+        const headers = ['Timestamp', 'Type', 'Message', 'Details', 'Part Number', 'Quantity', 'PO Number', 'XML File'];
+        const rows = logData.map(e => [
+            e.timestamp, e.type, e.message, e.details || '',
+            e.part_number || '', e.quantity || '', e.po_number || '', e.xml_file || ''
+        ]);
+
+        const csv = [headers, ...rows].map(r => r.map(c => `"${c}"`).join(',')).join('\n');
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${date}_activity_export.csv`;
+        a.click();
+    }
+
+    // Event listeners
+    document.getElementById('filter-date').addEventListener('change', loadLogs);
+    document.getElementById('filter-type').addEventListener('change', loadLogs);
+    document.getElementById('filter-search').addEventListener('input', () => {
+        clearTimeout(window.searchTimeout);
+        window.searchTimeout = setTimeout(loadLogs, 300);
+    });
+
+    // Initial load
+    loadLogs();
+</script>
+{% endblock %}

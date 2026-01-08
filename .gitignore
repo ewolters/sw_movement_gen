@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project specific
+outputs/xml/
+outputs/xml_test/
+outputs/logs/
+outputs/archive/
+config/settings.json
+
+# Keep sample outputs but ignore generated ones
+!outputs/*.xml
+!outputs/archive/.gitkeep
+
+# Sensitive data
+*.env
+.env
+credentials.json

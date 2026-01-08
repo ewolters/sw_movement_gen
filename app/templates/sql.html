@@ -1,0 +1,492 @@
+{% extends "base.html" %}
+
+{% block title %}SQL Configuration - MCC Packaging{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h4><i class="bi bi-database"></i> SQL Query Configuration</h4>
+        <p class="text-muted">Configure SQL queries to connect with your ERP system for inventory, jobs, and movements</p>
+    </div>
+</div>
+
+<!-- Connection Status -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="alert {{ 'alert-success' if connected else 'alert-warning' }} d-flex align-items-center">
+            <i class="bi {{ 'bi-check-circle' if connected else 'bi-exclamation-triangle' }} me-2"></i>
+            <div>
+                <strong>{{ 'Connected' if connected else 'Not Connected' }}</strong>
+                <span class="ms-2">{{ configured_count }}/5 queries configured</span>
+                {% if not connected %}
+                <br><small>Configure queries below. Database connection settings coming soon.</small>
+                {% endif %}
+            </div>
+            <button class="btn btn-sm btn-outline-dark ms-auto" onclick="testConnection()">
+                <i class="bi bi-plug"></i> Test Connection
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Query Editors -->
+<div class="row">
+    <div class="col-12">
+        <!-- Tab Navigation -->
+        <ul class="nav nav-tabs" id="sqlTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="fg-tab" data-bs-toggle="tab" data-bs-target="#fg-panel" type="button">
+                    <i class="bi bi-box-seam"></i> FG Inventory
+                    <span class="badge {{ 'bg-success' if sql_queries.fg_inventory else 'bg-secondary' }} ms-1">{{ '✓' if sql_queries.fg_inventory else '?' }}</span>
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="wip-tab" data-bs-toggle="tab" data-bs-target="#wip-panel" type="button">
+                    <i class="bi bi-gear"></i> WIP Inventory
+                    <span class="badge {{ 'bg-success' if sql_queries.wip_inventory else 'bg-secondary' }} ms-1">{{ '✓' if sql_queries.wip_inventory else '?' }}</span>
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="jobs-tab" data-bs-toggle="tab" data-bs-target="#jobs-panel" type="button">
+                    <i class="bi bi-list-task"></i> Open Jobs
+                    <span class="badge {{ 'bg-success' if sql_queries.open_jobs else 'bg-secondary' }} ms-1">{{ '✓' if sql_queries.open_jobs else '?' }}</span>
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="item-tab" data-bs-toggle="tab" data-bs-target="#item-panel" type="button">
+                    <i class="bi bi-upc-scan"></i> Item Mapping
+                    <span class="badge {{ 'bg-success' if sql_queries.item_mapping else 'bg-secondary' }} ms-1">{{ '✓' if sql_queries.item_mapping else '?' }}</span>
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="movements-tab" data-bs-toggle="tab" data-bs-target="#movements-panel" type="button">
+                    <i class="bi bi-arrow-left-right"></i> Movements
+                    <span class="badge {{ 'bg-success' if sql_queries.movements else 'bg-secondary' }} ms-1">{{ '✓' if sql_queries.movements else '?' }}</span>
+                </button>
+            </li>
+        </ul>
+
+        <!-- Tab Content -->
+        <div class="tab-content" id="sqlTabContent">
+            <!-- FG Inventory -->
+            <div class="tab-pane fade show active" id="fg-panel" role="tabpanel">
+                <div class="card border-top-0 rounded-0 rounded-bottom">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <label class="form-label fw-bold">Finished Goods Inventory Query</label>
+                                <p class="text-muted small mb-2">
+                                    Query to get FG inventory by part number. Use <code>:part_number</code> and <code>:site</code> as parameters.
+                                    Must return: <code>item_code</code>, <code>job_number</code>, <code>quantity</code>, <code>location</code>
+                                </p>
+                                <textarea class="form-control sql-editor" id="sql-fg_inventory" rows="10"
+                                    placeholder="SELECT item_code, job_number, qty_on_hand as quantity, location
+FROM fg_inventory
+WHERE part_number = :part_number
+  AND site_code = :site
+  AND qty_on_hand > 0
+ORDER BY qty_on_hand DESC">{{ sql_queries.fg_inventory or '' }}</textarea>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card bg-light">
+                                    <div class="card-header">
+                                        <i class="bi bi-info-circle"></i> Expected Columns
+                                    </div>
+                                    <div class="card-body small">
+                                        <table class="table table-sm table-borderless mb-0">
+                                            <tr><td><code>item_code</code></td><td>Item/SKU code</td></tr>
+                                            <tr><td><code>job_number</code></td><td>Source job (optional)</td></tr>
+                                            <tr><td><code>quantity</code></td><td>Available quantity</td></tr>
+                                            <tr><td><code>location</code></td><td>Warehouse location</td></tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="mt-3">
+                                    <button class="btn btn-outline-primary btn-sm" onclick="testQuery('fg_inventory')">
+                                        <i class="bi bi-play"></i> Test Query
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WIP Inventory -->
+            <div class="tab-pane fade" id="wip-panel" role="tabpanel">
+                <div class="card border-top-0 rounded-0 rounded-bottom">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <label class="form-label fw-bold">Work In Progress Inventory Query</label>
+                                <p class="text-muted small mb-2">
+                                    Query to get WIP inventory by part number. Use <code>:part_number</code> and <code>:site</code> as parameters.
+                                    Must return: <code>item_code</code>, <code>job_number</code>, <code>quantity</code>, <code>location</code>
+                                </p>
+                                <textarea class="form-control sql-editor" id="sql-wip_inventory" rows="10"
+                                    placeholder="SELECT item_code, job_number, wip_qty as quantity, location
+FROM wip_inventory
+WHERE part_number = :part_number
+  AND site_code = :site
+  AND wip_qty > 0
+ORDER BY wip_qty DESC">{{ sql_queries.wip_inventory or '' }}</textarea>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card bg-light">
+                                    <div class="card-header">
+                                        <i class="bi bi-info-circle"></i> Expected Columns
+                                    </div>
+                                    <div class="card-body small">
+                                        <table class="table table-sm table-borderless mb-0">
+                                            <tr><td><code>item_code</code></td><td>Item/SKU code</td></tr>
+                                            <tr><td><code>job_number</code></td><td>Production job</td></tr>
+                                            <tr><td><code>quantity</code></td><td>WIP quantity</td></tr>
+                                            <tr><td><code>location</code></td><td>Location</td></tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="mt-3">
+                                    <button class="btn btn-outline-primary btn-sm" onclick="testQuery('wip_inventory')">
+                                        <i class="bi bi-play"></i> Test Query
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Open Jobs -->
+            <div class="tab-pane fade" id="jobs-panel" role="tabpanel">
+                <div class="card border-top-0 rounded-0 rounded-bottom">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <label class="form-label fw-bold">Open Jobs Query</label>
+                                <p class="text-muted small mb-2">
+                                    Query to get open production jobs. Use <code>:part_number</code> and <code>:site</code> as parameters.
+                                    Must return: <code>job_number</code>, <code>item_code</code>, <code>part_number</code>, <code>quantity_ordered</code>, <code>quantity_produced</code>, <code>quantity_remaining</code>, <code>status</code>
+                                </p>
+                                <textarea class="form-control sql-editor" id="sql-open_jobs" rows="10"
+                                    placeholder="SELECT job_number, item_code, part_number,
+       qty_ordered as quantity_ordered,
+       qty_produced as quantity_produced,
+       (qty_ordered - qty_produced) as quantity_remaining,
+       status
+FROM production_jobs
+WHERE part_number = :part_number
+  AND site_code = :site
+  AND status IN ('OPEN', 'IN_PROGRESS', 'RELEASED')
+ORDER BY release_date">{{ sql_queries.open_jobs or '' }}</textarea>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card bg-light">
+                                    <div class="card-header">
+                                        <i class="bi bi-info-circle"></i> Expected Columns
+                                    </div>
+                                    <div class="card-body small">
+                                        <table class="table table-sm table-borderless mb-0">
+                                            <tr><td><code>job_number</code></td><td>Job ID</td></tr>
+                                            <tr><td><code>item_code</code></td><td>Item/SKU code</td></tr>
+                                            <tr><td><code>part_number</code></td><td>Part number</td></tr>
+                                            <tr><td><code>quantity_ordered</code></td><td>Job qty</td></tr>
+                                            <tr><td><code>quantity_produced</code></td><td>Completed qty</td></tr>
+                                            <tr><td><code>quantity_remaining</code></td><td>Remaining qty</td></tr>
+                                            <tr><td><code>status</code></td><td>Job status</td></tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="mt-3">
+                                    <button class="btn btn-outline-primary btn-sm" onclick="testQuery('open_jobs')">
+                                        <i class="bi bi-play"></i> Test Query
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item Mapping -->
+            <div class="tab-pane fade" id="item-panel" role="tabpanel">
+                <div class="card border-top-0 rounded-0 rounded-bottom">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <label class="form-label fw-bold">Item Code Mapping Query</label>
+                                <p class="text-muted small mb-2">
+                                    Query to map part numbers to item codes. Use <code>:part_number</code> as parameter.
+                                    Must return: <code>part_number</code>, <code>item_code</code>, <code>description</code>
+                                </p>
+                                <textarea class="form-control sql-editor" id="sql-item_mapping" rows="10"
+                                    placeholder="SELECT part_number, item_code, description
+FROM item_master
+WHERE part_number = :part_number">{{ sql_queries.item_mapping or '' }}</textarea>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card bg-light">
+                                    <div class="card-header">
+                                        <i class="bi bi-info-circle"></i> Expected Columns
+                                    </div>
+                                    <div class="card-body small">
+                                        <table class="table table-sm table-borderless mb-0">
+                                            <tr><td><code>part_number</code></td><td>Part number</td></tr>
+                                            <tr><td><code>item_code</code></td><td>ERP item code</td></tr>
+                                            <tr><td><code>description</code></td><td>Item description</td></tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="mt-3">
+                                    <button class="btn btn-outline-primary btn-sm" onclick="testQuery('item_mapping')">
+                                        <i class="bi bi-play"></i> Test Query
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Movements -->
+            <div class="tab-pane fade" id="movements-panel" role="tabpanel">
+                <div class="card border-top-0 rounded-0 rounded-bottom">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <label class="form-label fw-bold">Active Movements Query</label>
+                                <p class="text-muted small mb-2">
+                                    Query to get active movements/allocations for a job. Use <code>:job_number</code> as parameter.
+                                    Must return: <code>movement_id</code>, <code>job_number</code>, <code>quantity</code>, <code>status</code>, <code>created_date</code>
+                                </p>
+                                <textarea class="form-control sql-editor" id="sql-movements" rows="10"
+                                    placeholder="SELECT movement_id, job_number, quantity, status, created_date
+FROM stock_movements
+WHERE job_number = :job_number
+  AND status IN ('ACTIVE', 'PENDING', 'OPEN')
+ORDER BY created_date">{{ sql_queries.movements or '' }}</textarea>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card bg-light">
+                                    <div class="card-header">
+                                        <i class="bi bi-info-circle"></i> Expected Columns
+                                    </div>
+                                    <div class="card-body small">
+                                        <table class="table table-sm table-borderless mb-0">
+                                            <tr><td><code>movement_id</code></td><td>Movement ID</td></tr>
+                                            <tr><td><code>job_number</code></td><td>Related job</td></tr>
+                                            <tr><td><code>quantity</code></td><td>Movement qty</td></tr>
+                                            <tr><td><code>status</code></td><td>Movement status</td></tr>
+                                            <tr><td><code>created_date</code></td><td>Creation date</td></tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="mt-3">
+                                    <button class="btn btn-outline-primary btn-sm" onclick="testQuery('movements')">
+                                        <i class="bi bi-play"></i> Test Query
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Save Button -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <button class="btn btn-success" onclick="saveAllQueries()">
+                    <i class="bi bi-save"></i> Save All Queries
+                </button>
+                <span id="save-status" class="ms-2 small"></span>
+            </div>
+            <div>
+                <button class="btn btn-outline-secondary" onclick="exportQueries()">
+                    <i class="bi bi-download"></i> Export
+                </button>
+                <button class="btn btn-outline-secondary" onclick="document.getElementById('import-file').click()">
+                    <i class="bi bi-upload"></i> Import
+                </button>
+                <input type="file" id="import-file" accept=".json" style="display:none" onchange="importQueries(this)">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Test Results Panel -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card" id="test-results-panel" style="display: none;">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-terminal"></i> Test Results</span>
+                <button class="btn btn-sm btn-outline-light" onclick="hideTestResults()">
+                    <i class="bi bi-x"></i>
+                </button>
+            </div>
+            <div class="card-body">
+                <pre id="test-results" class="mb-0 small" style="max-height: 300px; overflow-y: auto;"></pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Logic Explanation -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <i class="bi bi-diagram-3"></i> Decision Logic
+            </div>
+            <div class="card-body">
+                <p class="small text-muted mb-3">When processing an order, the system follows this logic:</p>
+                <ol class="small">
+                    <li><strong>Check FG Inventory:</strong> If Finished Goods quantity >= order quantity -> Create <span class="badge bg-success">Movement</span> from FG</li>
+                    <li><strong>Check WIP Inventory:</strong> If WIP quantity >= order quantity -> Create <span class="badge bg-success">Movement</span> against WIP job</li>
+                    <li><strong>Check Open Jobs:</strong> If job has capacity (job qty - existing movements) >= order -> Create <span class="badge bg-success">Movement</span> against job</li>
+                    <li><strong>Create New Job:</strong> If nothing covers the order:
+                        <ul>
+                            <li>If order <= forecast -> Create <span class="badge bg-primary">Stock Job</span> for forecast quantity</li>
+                            <li>If order > forecast -> Create <span class="badge bg-warning text-dark">Rush Job</span> for order quantity</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    const queryTypes = ['fg_inventory', 'wip_inventory', 'open_jobs', 'item_mapping', 'movements'];
+
+    async function saveAllQueries() {
+        const statusEl = document.getElementById('save-status');
+        statusEl.innerHTML = '<span class="text-muted"><i class="bi bi-hourglass-split"></i> Saving...</span>';
+
+        const queries = {};
+        queryTypes.forEach(type => {
+            const textarea = document.getElementById(`sql-${type}`);
+            queries[type] = textarea ? textarea.value.trim() : null;
+        });
+
+        try {
+            const response = await fetch('/api/sql/queries', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(queries)
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                statusEl.innerHTML = '<span class="text-success"><i class="bi bi-check-circle"></i> Saved successfully!</span>';
+                setTimeout(() => location.reload(), 1000);
+            } else {
+                statusEl.innerHTML = `<span class="text-danger"><i class="bi bi-x-circle"></i> ${result.error || 'Save failed'}</span>`;
+            }
+        } catch (err) {
+            statusEl.innerHTML = `<span class="text-danger"><i class="bi bi-x-circle"></i> ${err.message}</span>`;
+        }
+    }
+
+    async function testQuery(queryType) {
+        const textarea = document.getElementById(`sql-${queryType}`);
+        const query = textarea ? textarea.value.trim() : '';
+
+        if (!query) {
+            showTestResults(`Error: No query configured for ${queryType}`, true);
+            return;
+        }
+
+        showTestResults('Executing query...', false);
+
+        try {
+            const response = await fetch('/api/sql/test', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ query_type: queryType, query: query })
+            });
+
+            const result = await response.json();
+
+            if (result.error) {
+                showTestResults(`Error: ${result.error}\n\nQuery:\n${query}`, true);
+            } else {
+                const output = `Query: ${queryType}\nStatus: ${result.connected ? 'Connected' : 'Not Connected (Mock Data)'}\nRows: ${result.row_count}\nTime: ${result.execution_time}s\n\nResults:\n${JSON.stringify(result.data, null, 2)}`;
+                showTestResults(output, false);
+            }
+        } catch (err) {
+            showTestResults(`Error: ${err.message}`, true);
+        }
+    }
+
+    function testConnection() {
+        showTestResults('Testing database connection...', false);
+        setTimeout(() => {
+            showTestResults('Database connection not configured.\n\nTo connect to your ERP database:\n1. Configure connection string in settings\n2. Ensure network access to database server\n3. Test each query individually', false);
+        }, 500);
+    }
+
+    function showTestResults(text, isError) {
+        const panel = document.getElementById('test-results-panel');
+        const results = document.getElementById('test-results');
+        panel.style.display = 'block';
+        results.textContent = text;
+        results.className = isError ? 'mb-0 small text-danger' : 'mb-0 small';
+    }
+
+    function hideTestResults() {
+        document.getElementById('test-results-panel').style.display = 'none';
+    }
+
+    function exportQueries() {
+        const queries = {};
+        queryTypes.forEach(type => {
+            const textarea = document.getElementById(`sql-${type}`);
+            queries[type] = textarea ? textarea.value.trim() : null;
+        });
+
+        const blob = new Blob([JSON.stringify(queries, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `sql_queries_${new Date().toISOString().slice(0,10)}.json`;
+        a.click();
+    }
+
+    function importQueries(input) {
+        const file = input.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                const queries = JSON.parse(e.target.result);
+                queryTypes.forEach(type => {
+                    const textarea = document.getElementById(`sql-${type}`);
+                    if (textarea && queries[type]) {
+                        textarea.value = queries[type];
+                    }
+                });
+                alert('Queries imported. Click "Save All Queries" to persist.');
+            } catch (err) {
+                alert('Failed to parse import file: ' + err.message);
+            }
+        };
+        reader.readAsText(file);
+        input.value = '';
+    }
+
+    // Syntax highlighting hint (basic)
+    document.querySelectorAll('.sql-editor').forEach(textarea => {
+        textarea.addEventListener('input', function() {
+            // Could add CodeMirror or similar here for syntax highlighting
+        });
+    });
+</script>
+{% endblock %}

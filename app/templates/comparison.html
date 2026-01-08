@@ -1,0 +1,334 @@
+{% extends "base.html" %}
+
+{% block title %}Comparison - SW Packaging Middleware{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h4><i class="bi bi-table"></i> Order vs Forecast vs Inventory</h4>
+        <p class="text-muted">Compare purchase orders against forecast and available inventory</p>
+    </div>
+</div>
+
+<!-- Alerts Panel -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-warning text-dark">
+                <i class="bi bi-exclamation-triangle"></i> Alerts
+                <span class="badge bg-dark ms-2" id="alert-count">0</span>
+            </div>
+            <div class="card-body" style="max-height: 150px; overflow-y: auto;">
+                <div id="alerts-panel">
+                    <p class="text-muted mb-0">Loading...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Filters -->
+<div class="row mb-3">
+    <div class="col-md-4">
+        <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-search"></i></span>
+            <input type="text" class="form-control" id="search-input" placeholder="Search part number...">
+        </div>
+    </div>
+    <div class="col-md-2">
+        <select class="form-select" id="filter-action">
+            <option value="">All Actions</option>
+            <option value="movement">Movements</option>
+            <option value="stock_job">Stock Jobs</option>
+            <option value="rush_job">Rush Jobs</option>
+        </select>
+    </div>
+    <div class="col-md-2">
+        <button class="btn btn-primary" onclick="loadComparison()">
+            <i class="bi bi-arrow-clockwise"></i> Refresh
+        </button>
+    </div>
+    <div class="col-md-4 text-end">
+        <button class="btn btn-success me-2" onclick="generateXML()">
+            <i class="bi bi-file-earmark-code"></i> Generate XML
+        </button>
+        <button class="btn btn-outline-secondary" onclick="exportCSV()">
+            <i class="bi bi-download"></i> Export CSV
+        </button>
+    </div>
+</div>
+
+<!-- XML Generation Status -->
+<div class="row mb-3" id="xml-status-row" style="display: none;">
+    <div class="col-12">
+        <div class="alert alert-info" id="xml-status">
+            <i class="bi bi-hourglass-split"></i> Generating XML files...
+        </div>
+    </div>
+</div>
+
+<!-- Month Indicator -->
+<div class="row mb-3">
+    <div class="col-12">
+        <span class="badge bg-info fs-6" id="month-badge">Loading...</span>
+        <span class="text-muted ms-2">Cumulative orders are compared against monthly forecast</span>
+    </div>
+</div>
+
+<!-- Comparison Table -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body p-0">
+                <div class="table-container">
+                    <table class="table table-striped table-hover mb-0 small">
+                        <thead class="sticky-top bg-white">
+                            <tr>
+                                <th>PO #</th>
+                                <th>Part Number</th>
+                                <th>Site</th>
+                                <th class="text-end">Order</th>
+                                <th class="text-end">Prior</th>
+                                <th class="text-end">Cumul.</th>
+                                <th class="text-end">Forecast</th>
+                                <th class="text-end">Remain</th>
+                                <th class="text-end">FG</th>
+                                <th class="text-end">WIP</th>
+                                <th class="text-end">Jobs</th>
+                                <th>Due</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="comparison-table">
+                            <tr>
+                                <td colspan="13" class="text-center text-muted py-4">
+                                    <i class="bi bi-inbox"></i> No data loaded. Upload PO file from Dashboard.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    let comparisonData = [];
+
+    async function loadComparison() {
+        const tbody = document.getElementById('comparison-table');
+        tbody.innerHTML = '<tr><td colspan="13" class="text-center py-4"><div class="spinner-border" role="status"></div></td></tr>';
+
+        try {
+            const response = await fetch('/api/comparison/data');
+            const data = await response.json();
+
+            if (data.error) {
+                tbody.innerHTML = `<tr><td colspan="13" class="text-center text-muted py-4">
+                    <i class="bi bi-info-circle"></i> ${data.error}
+                </td></tr>`;
+                return;
+            }
+
+            comparisonData = data.data;
+
+            // Update month badge
+            if (data.month) {
+                document.getElementById('month-badge').textContent = `Month: ${data.month}`;
+            }
+
+            renderTable();
+            renderAlerts(data.alerts, data.total_alerts);
+
+        } catch (err) {
+            tbody.innerHTML = `<tr><td colspan="13" class="text-center text-danger py-4">
+                <i class="bi bi-x-circle"></i> Failed to load data: ${err.message}
+            </td></tr>`;
+        }
+    }
+
+    function renderTable() {
+        const tbody = document.getElementById('comparison-table');
+        const search = document.getElementById('search-input').value.toUpperCase();
+        const actionFilter = document.getElementById('filter-action').value;
+
+        let filtered = comparisonData;
+
+        if (search) {
+            filtered = filtered.filter(row => row.part_number.toUpperCase().includes(search));
+        }
+
+        if (actionFilter) {
+            filtered = filtered.filter(row => row.action_type === actionFilter);
+        }
+
+        if (filtered.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="13" class="text-center text-muted py-4">No matching records</td></tr>';
+            return;
+        }
+
+        tbody.innerHTML = filtered.map(row => {
+            // Action styling based on type
+            let actionClass = '';
+            if (row.action_type === 'rush_job') {
+                actionClass = 'badge bg-danger';
+            } else if (row.action_type === 'stock_job') {
+                actionClass = 'badge bg-primary';
+            } else if (row.action_type === 'movement') {
+                actionClass = 'badge bg-success';
+            }
+
+            // Highlight cumulative if exceeds forecast
+            const cumulativeClass = row.cumulative_month > row.forecast_qty && row.forecast_qty > 0
+                ? 'text-danger fw-bold' : '';
+
+            // Highlight remaining if zero or negative
+            const remainingClass = row.forecast_remaining <= 0 ? 'text-danger' : 'text-success';
+
+            // Highlight inventory columns if they have values
+            const fgClass = row.fg_qty > 0 ? 'text-success' : 'text-muted';
+            const wipClass = row.wip_qty > 0 ? 'text-info' : 'text-muted';
+            const jobsClass = row.jobs_qty > 0 ? 'text-primary' : 'text-muted';
+
+            return `<tr>
+                <td>${row.po_number}</td>
+                <td><code>${row.part_number}</code></td>
+                <td>${row.site}</td>
+                <td class="text-end">${row.order_qty_rounded.toLocaleString()}</td>
+                <td class="text-end text-muted">${row.prior_month_orders.toLocaleString()}</td>
+                <td class="text-end ${cumulativeClass}">${row.cumulative_month.toLocaleString()}</td>
+                <td class="text-end">${row.forecast_qty.toLocaleString()}</td>
+                <td class="text-end ${remainingClass}">${row.forecast_remaining.toLocaleString()}</td>
+                <td class="text-end ${fgClass}">${row.fg_qty.toLocaleString()}</td>
+                <td class="text-end ${wipClass}">${row.wip_qty.toLocaleString()}</td>
+                <td class="text-end ${jobsClass}">${row.jobs_qty.toLocaleString()}</td>
+                <td>${row.due_date}</td>
+                <td><span class="${actionClass}">${row.action}</span></td>
+            </tr>`;
+        }).join('');
+    }
+
+    function renderAlerts(alerts, total) {
+        const panel = document.getElementById('alerts-panel');
+        document.getElementById('alert-count').textContent = total;
+
+        if (alerts.length === 0) {
+            panel.innerHTML = '<p class="text-muted mb-0">No alerts</p>';
+            return;
+        }
+
+        panel.innerHTML = alerts.map(alert => {
+            let icon = 'exclamation-triangle';
+            let color = 'warning';
+            if (alert.type === 'needs_job') {
+                icon = 'plus-circle';
+                color = 'danger';
+            } else if (alert.type === 'exceeds_forecast') {
+                icon = 'graph-up-arrow';
+                color = 'warning';
+            }
+            return `<div class="small mb-1">
+                <i class="bi bi-${icon} text-${color}"></i>
+                <strong>${alert.part}</strong>: ${alert.message}
+            </div>`;
+        }).join('');
+
+        if (total > alerts.length) {
+            panel.innerHTML += `<div class="small text-muted">... and ${total - alerts.length} more</div>`;
+        }
+    }
+
+    function exportCSV() {
+        if (comparisonData.length === 0) {
+            alert('No data to export');
+            return;
+        }
+
+        const headers = ['PO Number', 'Part Number', 'Site', 'Order', 'Prior Orders', 'Cumulative', 'Forecast', 'Remaining', 'FG Inv', 'WIP Inv', 'Jobs Avail', 'Due Date', 'Action', 'Job Number'];
+        const rows = comparisonData.map(row => [
+            row.po_number, row.part_number, row.site, row.order_qty_rounded,
+            row.prior_month_orders, row.cumulative_month, row.forecast_qty,
+            row.forecast_remaining, row.fg_qty, row.wip_qty, row.jobs_qty,
+            row.due_date, row.action, row.job_number || ''
+        ]);
+
+        const csv = [headers, ...rows].map(r => r.join(',')).join('\n');
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `comparison_${new Date().toISOString().slice(0,10)}.csv`;
+        a.click();
+    }
+
+    async function generateXML() {
+        if (comparisonData.length === 0) {
+            alert('No data loaded. Please load PO and Forecast files first.');
+            return;
+        }
+
+        // Count items by type
+        const stockJobs = comparisonData.filter(r => r.action_type === 'stock_job' || r.action_type === 'rush_job').length;
+        const movements = comparisonData.filter(r => r.action_type === 'movement').length;
+
+        if (!confirm(`Generate XML files?\n\n- Stock/Rush Jobs: ${stockJobs} items\n- Movements: ${movements} items\n\nThis will create XML files in the configured output folder.`)) {
+            return;
+        }
+
+        const statusRow = document.getElementById('xml-status-row');
+        const statusEl = document.getElementById('xml-status');
+        statusRow.style.display = 'block';
+        statusEl.className = 'alert alert-info';
+        statusEl.innerHTML = '<i class="bi bi-hourglass-split"></i> Generating XML files...';
+
+        try {
+            const response = await fetch('/api/xml/generate/from-comparison', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({})
+            });
+
+            const data = await response.json();
+
+            if (data.error) {
+                statusEl.className = 'alert alert-danger';
+                statusEl.innerHTML = `<i class="bi bi-x-circle"></i> Error: ${data.error}`;
+                return;
+            }
+
+            let message = '<i class="bi bi-check-circle"></i> <strong>XML files generated successfully!</strong><br>';
+
+            if (data.stock_jobs) {
+                message += `<br><i class="bi bi-file-earmark-code text-primary"></i> Stock Jobs: <code>${data.stock_jobs.filename}</code> (${data.stock_jobs.order_count} orders)`;
+            }
+
+            if (data.movements) {
+                message += `<br><i class="bi bi-file-earmark-code text-success"></i> Movements: <code>${data.movements.filename}</code> (${data.movements.order_count} orders)`;
+            }
+
+            if (!data.stock_jobs && !data.movements) {
+                message = '<i class="bi bi-info-circle"></i> No XML files generated (no actionable items)';
+                statusEl.className = 'alert alert-warning';
+            } else {
+                statusEl.className = 'alert alert-success';
+            }
+
+            statusEl.innerHTML = message;
+
+        } catch (err) {
+            statusEl.className = 'alert alert-danger';
+            statusEl.innerHTML = `<i class="bi bi-x-circle"></i> Failed to generate XML: ${err.message}`;
+        }
+    }
+
+    // Event listeners
+    document.getElementById('search-input').addEventListener('input', renderTable);
+    document.getElementById('filter-action').addEventListener('change', renderTable);
+
+    // Initial load
+    loadComparison();
+</script>
+{% endblock %}

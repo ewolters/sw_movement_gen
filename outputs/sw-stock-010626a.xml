@@ -1,0 +1,2633 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE orders SYSTEM "http://www.fortdearborn.com/dtd/order-entry_1_1.dtd">    
+
+<!--Generated from customer order entry -->
+
+<orders> 
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 101</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="250" run-type="normal">
+         <option>
+          <book-stock-job price="385.30" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-F77R01001-20A</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 102</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="500" run-type="normal">
+         <option>
+          <book-stock-job price="482.90" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-K35WQ8550-16</customer-reference-number>   
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 103</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="500" run-type="normal">
+         <option>
+          <book-stock-job price="66.70" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-N11V00400-14</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 104</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="2/5/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="2/5/2026" crif-ship="2/5/2026" />
+   </header>
+   <lines>
+      <line quantity="33000" run-type="normal">
+         <option>
+          <book-stock-job price="93.10" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-B25W00025-20AT</customer-reference-number>   
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 105</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="500" run-type="normal">
+         <option>
+          <book-stock-job price="100.00" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-E61A00045-20A</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 106</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="3501" run-type="normal">
+         <option>
+          <book-stock-job price="120.80" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-A98W01351-14</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 107</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="250" run-type="normal">
+         <option>
+          <book-stock-job price="2038.4" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-S24W00153-20AT</customer-reference-number>   
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 108</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="200" run-type="normal">
+         <option>
+          <book-stock-job price="511.20" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-S24T00154-20AT</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 109</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="1500" run-type="normal">
+         <option>
+          <book-stock-job price="175.70" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-S24T00154-16AT</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 110</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="200" run-type="normal">
+         <option>
+          <book-stock-job price="98.90" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-T70W80005-16</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 111</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="1000" run-type="normal">
+         <option>
+          <book-stock-job price="98.90" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-E63W00080-16</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 112</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="950" run-type="normal">
+         <option>
+          <book-stock-job price="89.80" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-B67V00235-16</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 113</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="1500" run-type="normal">
+         <option>
+          <book-stock-job price="329.50" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-B58V00680-14</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 114</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="500" run-type="normal">
+         <option>
+          <book-stock-job price="102.30" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-B50WV8430-20</customer-reference-number>   
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 115</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="1500" run-type="normal">
+         <option>
+          <book-stock-job price="75.80" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-A89W03151-20</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 116</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="2/5/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="2/5/2026" crif-ship="2/5/2026" />
+   </header>
+   <lines>
+      <line quantity="43000" run-type="normal">
+         <option>
+          <book-stock-job price="222.70" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-A27W00600-20</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 117</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="500" run-type="normal">
+         <option>
+          <book-stock-job price="370.00" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-20.101216-16EP</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 118</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="150" run-type="normal">
+         <option>
+          <book-stock-job price="2413.0" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-KSCN53510-20</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 119</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="250" run-type="normal">
+         <option>
+          <book-stock-job price="102.30" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-B65Y00680-G5</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 120</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="2/5/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="2/5/2026" crif-ship="2/5/2026" />
+   </header>
+   <lines>
+      <line quantity="7000" run-type="normal">
+         <option>
+          <book-stock-job price="275.30" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-YF0071017</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 121</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="850" run-type="normal">
+         <option>
+          <book-stock-job price="947.90" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-K62RQ2658-16</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 122</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="2/5/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="2/5/2026" crif-ship="2/5/2026" />
+   </header>
+   <lines>
+      <line quantity="13000" run-type="normal">
+         <option>
+          <book-stock-job price="133.00" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-PB11W0100-16</customer-reference-number>   
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 123</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="2/5/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="2/5/2026" crif-ship="2/5/2026" />
+   </header>
+   <lines>
+      <line quantity="21000" run-type="normal">
+         <option>
+          <book-stock-job price="177.50" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-20.101214-16</customer-reference-number> 
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 124</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="500" run-type="normal">
+         <option>
+          <book-stock-job price="102.30" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-B69VZ0012-19G2</customer-reference-number>   
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 125</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="1000" run-type="normal">
+         <option>
+          <book-stock-job price="89.80" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-B65W00351-16G2</customer-reference-number>   
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 126</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="1000" run-type="normal">
+         <option>
+          <book-stock-job price="102.30" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-B62W00220-19G2</customer-reference-number>   
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 127</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="1500" run-type="normal">
+         <option>
+          <book-stock-job price="89.80" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-CK700C685-16G2</customer-reference-number>   
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 128</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="500" run-type="normal">
+         <option>
+          <book-stock-job price="102.30" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-B62V00230-20G2</customer-reference-number>   
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 129</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="1000" run-type="normal">
+         <option>
+          <book-stock-job price="208.20" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-KST041505-20G2</customer-reference-number>   
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 130</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="500" run-type="normal">
+         <option>
+          <book-stock-job price="201.50" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-V84FH0143-20G3</customer-reference-number>   
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 131</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="1000" run-type="normal">
+         <option>
+          <book-stock-job price="301.40" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-D16WQ8151-16</customer-reference-number>   
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 132</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="500" run-type="normal">
+         <option>
+          <book-stock-job price="227.50" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-DH5760020-16G3</customer-reference-number>   
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 133</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="1500" run-type="normal">
+         <option>
+          <book-stock-job price="95.30" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-B42W00001-20G3</customer-reference-number>   
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 134</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="500" run-type="normal">
+         <option>
+          <book-stock-job price="102.30" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-B55T00304-20G3</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 135</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="5000" run-type="normal">
+         <option>
+          <book-stock-job price="143.60" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-B24W04651-20AT</customer-reference-number>   
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 136</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="1000" run-type="normal">
+         <option>
+          <book-stock-job price="571.30" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-25.101415-20</customer-reference-number> 
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 137</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="500" run-type="normal">
+         <option>
+          <book-stock-job price="405.40" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-A44W01050-20AT</customer-reference-number>   
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 138</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="500" run-type="normal">
+         <option>
+          <book-stock-job price="272.90" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-B49W08040-20</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 139</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="500" run-type="normal">
+         <option>
+          <book-stock-job price="102.30" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-B67B00235-19G3</customer-reference-number>   
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 140</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="1000" run-type="normal">
+         <option>
+          <book-stock-job price="183.20" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-K37T00355-16</customer-reference-number> 
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 141</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="6000" run-type="normal">
+         <option>
+          <book-stock-job price="203.50" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-K36W00451-16</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 142</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="3000" run-type="normal">
+         <option>
+          <book-stock-job price="142.30" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-K38T00354-14</customer-reference-number> 
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 143</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="1000" run-type="normal">
+         <option>
+          <book-stock-job price="264.10" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-K38W00351-16</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 144</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="500" run-type="normal">
+         <option>
+          <book-stock-job price="517.90" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-SD4C01115-20</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 145</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="4000" run-type="normal">
+         <option>
+          <book-stock-job price="204.40" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-A86W00063-16</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 146</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="2/5/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="2/5/2026" crif-ship="2/5/2026" />
+   </header>
+   <lines>
+      <line quantity="11507" run-type="normal">
+         <option>
+          <book-stock-job price="176.20" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-50.100204-16</customer-reference-number> 
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 147</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="500" run-type="normal">
+         <option>
+          <book-stock-job price="285.20" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-A15TQ8005-16</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 148</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="500" run-type="normal">
+         <option>
+          <book-stock-job price="271.20" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-21.104500-16</customer-reference-number> 
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 149</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="1000" run-type="normal">
+         <option>
+          <book-stock-job price="304.20" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-K04591B07</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 150</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="500" run-type="normal">
+         <option>
+          <book-stock-job price="227.50" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-DH5760012-16US</customer-reference-number>   
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 151</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="1000" run-type="normal">
+         <option>
+          <book-stock-job price="102.30" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-B58W00620-20</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 152</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="500" run-type="normal">
+         <option>
+          <book-stock-job price="825.40" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-IMUFP423G01</customer-reference-number>   
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 153</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="3500" run-type="normal">
+         <option>
+          <book-stock-job price="249.10" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-200034444-C-14</customer-reference-number> 
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 154</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="2500" run-type="normal">
+         <option>
+          <book-stock-job price="18.50" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-200014444-C-12</customer-reference-number> 
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 155</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="2/5/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="2/5/2026" crif-ship="2/5/2026" />
+   </header>
+   <lines>
+      <line quantity="22000" run-type="normal">
+         <option>
+          <book-stock-job price="122.30" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-YG0071018</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 156</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="500" run-type="normal">
+         <option>
+          <book-stock-job price="102.30" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-B65T00604-19</customer-reference-number> 
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 157</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="1000" run-type="normal">
+         <option>
+          <book-stock-job price="89.80" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-B65Y00050-16</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 158</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="2500" run-type="normal">
+         <option>
+          <book-stock-job price="89.80" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-B65T00354-16</customer-reference-number> 
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 159</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="500" run-type="normal">
+         <option>
+          <book-stock-job price="89.80" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-B65T00525-16</customer-reference-number> 
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 160</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="4500" run-type="normal">
+         <option>
+          <book-stock-job price="89.80" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-B69A00120-15</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 161</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="1500" run-type="normal">
+         <option>
+          <book-stock-job price="456.10" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-K09732008</customer-reference-number> 
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 162</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="1500" run-type="normal">
+         <option>
+          <book-stock-job price="89.80" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-B58B00600-16</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 163</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="1000" run-type="normal">
+         <option>
+          <book-stock-job price="89.80" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-B58R00600-16</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 164</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="500" run-type="normal">
+         <option>
+          <book-stock-job price="313.70" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-CF31T0007-20AT</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 165</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="2/5/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="2/5/2026" crif-ship="2/5/2026" />
+   </header>
+   <lines>
+      <line quantity="8000" run-type="normal">
+         <option>
+          <book-stock-job price="98.90" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-H66W00082-16</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 166</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="2/5/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="2/5/2026" crif-ship="2/5/2026" />
+   </header>
+   <lines>
+      <line quantity="3000" run-type="normal">
+         <option>
+          <book-stock-job price="201.50" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-H66W00082-20</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 167</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="500" run-type="normal">
+         <option>
+          <book-stock-job price="102.30" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-B62A00055-19</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 168</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="2/5/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="2/5/2026" crif-ship="2/5/2026" />
+   </header>
+   <lines>
+      <line quantity="4000" run-type="normal">
+         <option>
+          <book-stock-job price="345.70" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-GP3746B01-16</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 169</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="1000" run-type="normal">
+         <option>
+          <book-stock-job price="486.50" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-811390000-16</customer-reference-number> 
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 170</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="3500" run-type="normal">
+         <option>
+          <book-stock-job price="192.20" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-861410000-14</customer-reference-number> 
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 171</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="1500" run-type="normal">
+         <option>
+          <book-stock-job price="180.60" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-A61W00251-20</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 172</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="3505" run-type="normal">
+         <option>
+          <book-stock-job price="135.00" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-B51T00600-16</customer-reference-number> 
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 173</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="1000" run-type="normal">
+         <option>
+          <book-stock-job price="89.80" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-B69A00100-16</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 174</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="1000" run-type="normal">
+         <option>
+          <book-stock-job price="168.40" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-GP3760B01-16</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 175</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="50" run-type="normal">
+         <option>
+          <book-stock-job price="296.00" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-GP3568G01-16</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 176</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="50" run-type="normal">
+         <option>
+          <book-stock-job price="1770.9" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-GP3567B01-16</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 177</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="500" run-type="normal">
+         <option>
+          <book-stock-job price="272.90" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-B47WJ0661-20</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 178</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="500" run-type="normal">
+         <option>
+          <book-stock-job price="3051.4" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-85310000-20</customer-reference-number> 
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 179</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="500" run-type="normal">
+         <option>
+          <book-stock-job price="458.30" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-B58LW0681-19</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 180</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="1000" run-type="normal">
+         <option>
+          <book-stock-job price="518.10" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-V70VA2500-12</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 181</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="5500" run-type="normal">
+         <option>
+          <book-stock-job price="337.40" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-YG5332032-16</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 182</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="1000" run-type="normal">
+         <option>
+          <book-stock-job price="54.70" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-710310000-16</customer-reference-number> 
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 183</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="3000" run-type="normal">
+         <option>
+          <book-stock-job price="206.30" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-630200444-14</customer-reference-number> 
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 184</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="1000" run-type="normal">
+         <option>
+          <book-stock-job price="74.50" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-K46W02151-16G3</customer-reference-number>   
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 185</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="500" run-type="normal">
+         <option>
+          <book-stock-job price="89.80" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-B59A01200-16</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 186</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="500" run-type="normal">
+         <option>
+          <book-stock-job price="98.90" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-AT95W0020-16</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 187</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="500" run-type="normal">
+         <option>
+          <book-stock-job price="74.50" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-B73T00304-16G3</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 188</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="2000" run-type="normal">
+         <option>
+          <book-stock-job price="74.50" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-B73V00300-16G3</customer-reference-number>   
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 189</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="2500" run-type="normal">
+         <option>
+          <book-stock-job price="22.20" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-305014444-12</customer-reference-number> 
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 190</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="8503" run-type="normal">
+         <option>
+          <book-stock-job price="54.00" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-230054444-12</customer-reference-number> 
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 191</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="500" run-type="normal">
+         <option>
+          <book-stock-job price="102.30" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-B65T00354-19</customer-reference-number> 
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 192</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="2500" run-type="normal">
+         <option>
+          <book-stock-job price="114.40" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-214704444-12</customer-reference-number> 
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 193</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="500" run-type="normal">
+         <option>
+          <book-stock-job price="144.00" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-61410444-14</customer-reference-number> 
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 194</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="1000" run-type="normal">
+         <option>
+          <book-stock-job price="144.00" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-61420444-14</customer-reference-number> 
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 195</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="2/5/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="2/5/2026" crif-ship="2/5/2026" />
+   </header>
+   <lines>
+      <line quantity="8000" run-type="normal">
+         <option>
+          <book-stock-job price="144.00" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-61470444-14</customer-reference-number> 
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 196</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="3000" run-type="normal">
+         <option>
+          <book-stock-job price="144.00" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-61480444-14</customer-reference-number> 
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 197</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="500" run-type="normal">
+         <option>
+          <book-stock-job price="126.90" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-61340444-14</customer-reference-number> 
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 198</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="2000" run-type="normal">
+         <option>
+          <book-stock-job price="134.30" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-B24W02651-20AT</customer-reference-number>   
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 199</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="1000" run-type="normal">
+         <option>
+          <book-stock-job price="89.80" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-B70V08100-16</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 200</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="1000" run-type="normal">
+         <option>
+          <book-stock-job price="1154.7" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-348034444-C-14</customer-reference-number> 
+         </item>
+      </line>
+   </lines>
+</order>
+<order signal="submit" plant="14">
+   <header>
+      <order-customer address="12977" code="SHER003">   
+         <po>VMI 01.06.26 201</po>
+      </order-customer>
+      <invoice-customer address="12977"/>
+      <delivery-customer address="13316" date="1/27/2026">
+         <delivery-method code="TRK">
+            <freight>
+               <prepaid />
+            </freight>
+         </delivery-method>
+      </delivery-customer>
+    <request-options po-received="01/06/2026" crif="1/27/2026" crif-ship="1/27/2026" />
+   </header>
+   <lines>
+      <line quantity="1000" run-type="normal">
+         <option>
+          <book-stock-job price="334.40" price-qty="1000" />
+         </option>
+         <item>
+            <customer-reference-number>L-CM3385300-C-14</customer-reference-number>  
+         </item>
+      </line>
+   </lines>
+</order>
+</orders>

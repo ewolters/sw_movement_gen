@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block title %}Jobs - SW Packaging Middleware{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h4><i class="bi bi-list-task"></i> Jobs Overview</h4>
+        <p class="text-muted">View stock jobs, rush jobs, and movements</p>
+    </div>
+</div>
+
+<!-- Summary Cards -->
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card summary-card">
+            <div class="number text-primary">0</div>
+            <div class="label">Stock Jobs</div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card summary-card rush">
+            <div class="number">0</div>
+            <div class="label">Rush Jobs</div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card summary-card">
+            <div class="number text-info">0</div>
+            <div class="label">Movements</div>
+        </div>
+    </div>
+</div>
+
+<!-- Filter Tabs -->
+<div class="row mb-3">
+    <div class="col-12">
+        <ul class="nav nav-tabs" id="jobTabs">
+            <li class="nav-item">
+                <a class="nav-link active" data-bs-toggle="tab" href="#all-jobs">All</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#stock-jobs">Stock Jobs</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#rush-jobs">Rush Jobs</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#movements">Movements</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<!-- Jobs Table -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-container">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>Part Number</th>
+                                <th>Quantity</th>
+                                <th>Created</th>
+                                <th>Status</th>
+                                <th>XML File</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="jobs-table">
+                            <tr>
+                                <td colspan="7" class="text-center text-muted py-4">
+                                    <i class="bi bi-inbox"></i> No jobs created yet.
+                                    <br><small>Jobs will appear here when generated from comparison data.</small>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Manual Job Creation (Future) -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <i class="bi bi-plus-circle"></i> Create Job Manually
+            </div>
+            <div class="card-body">
+                <p class="text-muted">Manual job creation will be available once database connection is configured.</p>
+                <button class="btn btn-outline-primary" disabled>
+                    <i class="bi bi-plus"></i> New Stock Job
+                </button>
+                <button class="btn btn-outline-danger" disabled>
+                    <i class="bi bi-plus"></i> New Rush Job
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Placeholder for jobs functionality
+    // Will be populated when XML generation is implemented
+</script>
+{% endblock %}
